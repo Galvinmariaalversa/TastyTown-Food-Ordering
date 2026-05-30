@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - TastyTown</title>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316',
+                        secondary: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
+        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2.5 group">
+                <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
+                    <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21C16 16.5 19 13 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 13 8 16.5 12 21Z" fill="url(#logo-grad)" stroke="#ea580c" stroke-width="1.2" stroke-linejoin="round" />
+                        <path d="M8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12H8Z" fill="white" />
+                        <path d="M7 13.5H17" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+                        <circle cx="12" cy="7" r="0.5" fill="white" />
+                        <path d="M11 5.5C11.5 5 11.5 4.5 12 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <path d="M13 5.5C13.5 5 13.5 4.5 14 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <defs>
+                            <linearGradient id="logo-grad" x1="5" y1="2" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#f97316" />
+                                <stop offset="1" stop-color="#ea580c" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="font-heading font-extrabold text-xl text-gray-900 tracking-tight group-hover:text-primary transition-colors">Tasty<span class="text-primary">Town</span></span>
+                    <span class="text-[9px] text-gray-400 font-bold tracking-widest uppercase mt-0.5">Premium Delivery</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Home</a>
+
+                <!-- Dropdown -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-1 font-medium text-gray-600 group-hover:text-primary transition-colors py-2">
+                        Menu <i class="ri-arrow-down-s-line transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <div
+                        class="absolute top-full left-0 w-48 bg-white rounded-xl shadow-xl border border-gray-100 p-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                        <a href="menu.html"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">All
+                            Items</a>
+                        <a href="menu.html?cat=Pizza"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Pizza</a>
+                        <a href="menu.html?cat=Burger"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Burger</a>
+                        <a href="menu.html?cat=Biryani"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Biryani</a>
+                        <a href="menu.html?cat=Desserts"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Desserts</a>
+                    </div>
+                </div>
+
+                <a href="about.html" class="font-medium text-gray-600 hover:text-primary transition-colors">About</a>
+                <a href="contact.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Contact</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Location + Search Bar (Hidden Mobile) -->
+                <div class="hidden lg:flex items-center bg-gray-100 border border-gray-200/50 rounded-full px-3 py-1.5 gap-2 max-w-md shadow-sm">
+                    <!-- Location Selector Button -->
+                    <button class="flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors border-r border-gray-300 pr-2.5 nav-location-btn flex-shrink-0">
+                        <i class="ri-map-pin-line text-primary text-sm"></i>
+                        <span class="nav-location-name truncate max-w-[90px]">Manhattan, NY</span>
+                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                    </button>
+                    <!-- Search Input -->
+                    <div class="flex items-center w-48 relative">
+                        <i class="ri-search-line text-gray-400 mr-2 text-sm"></i>
+                        <input type="text" placeholder="Search for food..."
+                            class="bg-transparent border-none outline-none w-full text-xs placeholder-gray-400 text-gray-700 nav-search-input">
+                    </div>
+                </div>
+
+                <a href="cart.html"
+                    class="relative p-2.5 hover:bg-orange-50 text-gray-600 hover:text-primary rounded-full transition-all duration-300">
+                    <i class="ri-shopping-bag-3-line text-xl"></i>
+                    <span
+                        class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+                </a>
+
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors active:scale-95">
+                    <i class="ri-menu-4-line text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="md:hidden hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 z-50 origin-top">
+            <div class="p-4 flex flex-col gap-2">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-orange-50 text-primary font-bold">
+                    <i class="ri-home-4-line"></i> Home
+                </a>
+
+                <div class="border-t border-b border-gray-50 py-2 my-1">
+                    <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
+                    <a href="menu.html"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-restaurant-line"></i> All Items
+                    </a>
+                    <a href="menu.html?cat=Pizza"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-pie-chart-line"></i> Pizza
+                    </a>
+                    <a href="menu.html?cat=Burger"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-bread-line"></i> Burger
+                    </a>
+                </div>
+
+                <a href="about.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-information-line"></i> About Us
+                </a>
+                <a href="contact.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-customer-service-2-line"></i> Contact
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-gray-900 text-white py-20 text-center relative overflow-hidden">
+        <div class="relative z-10 container mx-auto px-4">
+            <h1 class="font-heading text-4xl md:text-5xl font-bold mb-4">Our Story of Taste</h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">We started with a simple vision: to bring authentic,
+                high-quality, and delicious food straight to your doorstep.</p>
+        </div>
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1500&q=60')] bg-cover bg-center opacity-20">
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-16">
+
+        <!-- Story / Promise -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+            <div>
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?auto=format&fit=crop&w=800&q=80"
+                    class="rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-all duration-500">
+            </div>
+            <div>
+                <span class="text-primary font-bold uppercase tracking-wider mb-2 block">Who We Are</span>
+                <h2 class="font-heading text-3xl font-bold text-gray-900 mb-6">Serving Happiness Since 2015</h2>
+                <p class="text-gray-500 mb-6 leading-relaxed">
+                    TastyTown isn't just a food delivery service; it's a commitment to quality. We partner with the
+                    finest local chefs and use only fresh, locally sourced ingredients to prepare meals that delight
+                    your senses.
+                </p>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-orange-50 p-6 rounded-2xl">
+                        <i class="ri-shield-check-line text-3xl text-primary mb-2"></i>
+                        <h4 class="font-bold text-gray-900">100% Hygiene</h4>
+                        <p class="text-sm text-gray-500">Sanitized kitchens & safe packaging.</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-2xl">
+                        <i class="ri-plant-line text-3xl text-green-600 mb-2"></i>
+                        <h4 class="font-bold text-gray-900">Fresh Ingredients</h4>
+                        <p class="text-sm text-gray-500">Farm-fresh vegetables & HALAL meats.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Counter Section -->
+        <div class="scroll-reveal my-24 bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-xl">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(249,115,22,0.15),transparent_50%)]"></div>
+            <div class="relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-y lg:divide-y-0 lg:divide-x divide-gray-700/50">
+                <div class="pt-6 lg:pt-0">
+                    <span class="block font-heading text-4xl md:text-5xl font-extrabold text-primary mb-2">1M+</span>
+                    <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Meals Delivered</span>
+                </div>
+                <div class="pt-6 lg:pt-0 lg:pl-6">
+                    <span class="block font-heading text-4xl md:text-5xl font-extrabold text-primary mb-2">50+</span>
+                    <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Elite Partner Chefs</span>
+                </div>
+                <div class="pt-6 lg:pt-0 lg:pl-6">
+                    <span class="block font-heading text-4xl md:text-5xl font-extrabold text-primary mb-2">4.9★</span>
+                    <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Customer Rating</span>
+                </div>
+                <div class="pt-6 lg:pt-0 lg:pl-6">
+                    <span class="block font-heading text-4xl md:text-5xl font-extrabold text-primary mb-2">15m</span>
+                    <span class="text-sm text-gray-400 font-medium uppercase tracking-wider">Avg Delivery Time</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Values Section -->
+        <div class="mb-24">
+            <div class="text-center max-w-xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-bold uppercase tracking-wider mb-2 block">Our Philosophy</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-900">The Values That Guide Us</h2>
+                <p class="text-gray-500 mt-4">We hold ourselves to the highest standards to ensure every bite is a culinary masterpiece delivered to perfection.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="scroll-reveal bg-white p-8 rounded-3xl border border-gray-100 hover:border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center text-primary text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="ri-award-line"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-gray-900 mb-3">Gourmet Quality</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Every recipe is curated by award-winning chefs, blending classic culinary techniques with modern gastronomy to create rich sensory experiences.
+                    </p>
+                </div>
+                <!-- Value 2 -->
+                <div class="scroll-reveal bg-white p-8 rounded-3xl border border-gray-100 hover:border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="ri-leaf-line"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-gray-900 mb-3">100% Sustainable</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        We work directly with certified local organic farms. Our packaging is 100% compostable, and we offset all delivery carbon emissions.
+                    </p>
+                </div>
+                <!-- Value 3 -->
+                <div class="scroll-reveal bg-white p-8 rounded-3xl border border-gray-100 hover:border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="ri-flashlight-line"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-gray-900 mb-3">Precision Logistics</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Using smart thermal delivery pods and dynamic route optimization, we guarantee your meals arrive at their exact intended serving temperatures.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="mb-24">
+            <div class="text-center max-w-xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-bold uppercase tracking-wider mb-2 block">Our Milestones</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-900">A Journey of Taste and Passion</h2>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Center line -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                
+                <div class="space-y-12">
+                    <!-- Timeline Item 1 -->
+                    <div class="relative flex flex-col md:flex-row items-start md:items-center scroll-reveal">
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white shadow flex items-center justify-center z-10">
+                            <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                        </div>
+                        <div class="w-full md:w-1/2 pl-12 md:pl-0 md:pr-12 md:text-right">
+                            <span class="inline-block px-3 py-1 bg-orange-100 text-primary text-xs font-bold rounded-full mb-2">2015</span>
+                            <h3 class="font-heading text-xl font-bold text-gray-900 mb-2">The Cozy Kitchen</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Started as a small brick-and-mortar cafe in Manhattan with only 3 chefs and a passion for authentic Italian recipes.</p>
+                        </div>
+                        <div class="hidden md:block w-1/2"></div>
+                    </div>
+                    
+                    <!-- Timeline Item 2 -->
+                    <div class="relative flex flex-col md:flex-row items-start md:items-center scroll-reveal">
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white shadow flex items-center justify-center z-10">
+                            <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                        </div>
+                        <div class="hidden md:block w-1/2"></div>
+                        <div class="w-full md:w-1/2 pl-12 md:pl-12">
+                            <span class="inline-block px-3 py-1 bg-orange-100 text-primary text-xs font-bold rounded-full mb-2">2018</span>
+                            <h3 class="font-heading text-xl font-bold text-gray-900 mb-2">Going Digital</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Launched our online food ordering platform and in-house delivery squad, expanding our culinary delivery to the entire borough.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 3 -->
+                    <div class="relative flex flex-col md:flex-row items-start md:items-center scroll-reveal">
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white shadow flex items-center justify-center z-10">
+                            <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                        </div>
+                        <div class="w-full md:w-1/2 pl-12 md:pl-0 md:pr-12 md:text-right">
+                            <span class="inline-block px-3 py-1 bg-orange-100 text-primary text-xs font-bold rounded-full mb-2">2021</span>
+                            <h3 class="font-heading text-xl font-bold text-gray-900 mb-2">Chef Collective</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Partnered with 50+ award-winning independent local chefs, introducing daily gourmet specials and chef collaboration menus.</p>
+                        </div>
+                        <div class="hidden md:block w-1/2"></div>
+                    </div>
+                    
+                    <!-- Timeline Item 4 -->
+                    <div class="relative flex flex-col md:flex-row items-start md:items-center scroll-reveal">
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-primary border-4 border-white shadow flex items-center justify-center z-10">
+                            <span class="w-2.5 h-2.5 rounded-full bg-white"></span>
+                        </div>
+                        <div class="hidden md:block w-1/2"></div>
+                        <div class="w-full md:w-1/2 pl-12 md:pl-12">
+                            <span class="inline-block px-3 py-1 bg-orange-100 text-primary text-xs font-bold rounded-full mb-2">2025</span>
+                            <h3 class="font-heading text-xl font-bold text-gray-900 mb-2">Eco-Gastronomy</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Completely migrated to electric-only delivery fleets and 100% biodegradable seaweed packaging, setting new industry standards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chefs Section -->
+        <div class="mb-24">
+            <div class="text-center max-w-xl mx-auto mb-16 scroll-reveal">
+                <span class="text-primary font-bold uppercase tracking-wider mb-2 block">Our Culinary Artists</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-gray-900">Meet The Masters Behind The Taste</h2>
+                <p class="text-gray-500 mt-4">Our kitchens are led by culinary visionaries who bring experience from Michelin-starred establishments worldwide.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Chef 1 -->
+                <div class="scroll-reveal bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=500&q=80" alt="Chef Alessandro Silva" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs uppercase tracking-widest text-primary font-bold">Executive Chef</span>
+                            <h3 class="font-heading text-xl font-bold mt-1">Alessandro Silva</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-500 text-sm leading-relaxed">
+                            With over 15 years in luxury dining, Alessandro brings deep expertise in fine-tuning Mediterranean sauces and artisanal doughs.
+                        </p>
+                        <div class="mt-6 flex items-center gap-4 text-gray-400">
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chef 2 -->
+                <div class="scroll-reveal bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=80" alt="Chef Mei Lin" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs uppercase tracking-widest text-primary font-bold">Wok & Fusion Specialist</span>
+                            <h3 class="font-heading text-xl font-bold mt-1">Mei Lin</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-500 text-sm leading-relaxed">
+                            A pioneer of modern Asian street-fusion culinary arts, Mei is celebrated for combining complex traditional spices with local produce.
+                        </p>
+                        <div class="mt-6 flex items-center gap-4 text-gray-400">
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chef 3 -->
+                <div class="scroll-reveal bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=500&q=80" alt="Chef Sophia Dubois" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="text-xs uppercase tracking-widest text-primary font-bold">Master Pâtissier</span>
+                            <h3 class="font-heading text-xl font-bold mt-1">Sophia Dubois</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-500 text-sm leading-relaxed">
+                            Trained in Paris, Sophia manages our desserts and baking arrays, crafting award-winning delights that melt in your mouth.
+                        </p>
+                        <div class="mt-6 flex items-center gap-4 text-gray-400">
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
+                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beautiful CTA Section -->
+        <div class="scroll-reveal bg-orange-50 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-orange-100/50 mb-8 animate-pulse-subtle">
+            <div>
+                <h3 class="font-heading text-2xl font-bold text-gray-900 mb-2">Have questions or custom booking requests?</h3>
+                <p class="text-gray-600 text-sm">We provide catering support, group order inquiries, and culinary partnerships.</p>
+            </div>
+            <a href="contact.html" class="bg-gray-900 hover:bg-gray-800 text-white font-bold px-8 py-3.5 rounded-xl transition-all duration-300 shadow-lg flex items-center gap-2 flex-shrink-0 active:scale-98">
+                Get in Touch <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer same as Index -->
+    <footer class="bg-white border-t border-gray-100 py-8 text-center text-sm text-gray-400">
+        © 2024 TastyTown. Made with ❤️ for foodies.
+    </footer>
+
+    <script type="module">
+        import { setupMobileMenu } from './js/main.js';
+        setupMobileMenu();
+    </script>
+</body>
+
+</html>

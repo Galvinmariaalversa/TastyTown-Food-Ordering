@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - TastyTown</title>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316',
+                        secondary: '#1f2937',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
+        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2.5 group">
+                <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
+                    <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21C16 16.5 19 13 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 13 8 16.5 12 21Z" fill="url(#logo-grad)" stroke="#ea580c" stroke-width="1.2" stroke-linejoin="round" />
+                        <path d="M8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12H8Z" fill="white" />
+                        <path d="M7 13.5H17" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+                        <circle cx="12" cy="7" r="0.5" fill="white" />
+                        <path d="M11 5.5C11.5 5 11.5 4.5 12 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <path d="M13 5.5C13.5 5 13.5 4.5 14 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <defs>
+                            <linearGradient id="logo-grad" x1="5" y1="2" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#f97316" />
+                                <stop offset="1" stop-color="#ea580c" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="font-heading font-extrabold text-xl text-gray-900 tracking-tight group-hover:text-primary transition-colors">Tasty<span class="text-primary">Town</span></span>
+                    <span class="text-[9px] text-gray-400 font-bold tracking-widest uppercase mt-0.5">Premium Delivery</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Home</a>
+
+                <!-- Dropdown -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-1 font-medium text-gray-600 group-hover:text-primary transition-colors py-2">
+                        Menu <i class="ri-arrow-down-s-line transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <div
+                        class="absolute top-full left-0 w-48 bg-white rounded-xl shadow-xl border border-gray-100 p-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                        <a href="menu.html"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">All
+                            Items</a>
+                        <a href="menu.html?cat=Pizza"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Pizza</a>
+                        <a href="menu.html?cat=Burger"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Burger</a>
+                        <a href="menu.html?cat=Biryani"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Biryani</a>
+                        <a href="menu.html?cat=Desserts"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Desserts</a>
+                    </div>
+                </div>
+
+                <a href="about.html" class="font-medium text-gray-600 hover:text-primary transition-colors">About</a>
+                <a href="contact.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Contact</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Location + Search Bar (Hidden Mobile) -->
+                <div class="hidden lg:flex items-center bg-gray-100 border border-gray-200/50 rounded-full px-3 py-1.5 gap-2 max-w-md shadow-sm">
+                    <!-- Location Selector Button -->
+                    <button class="flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors border-r border-gray-300 pr-2.5 nav-location-btn flex-shrink-0">
+                        <i class="ri-map-pin-line text-primary text-sm"></i>
+                        <span class="nav-location-name truncate max-w-[90px]">Manhattan, NY</span>
+                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                    </button>
+                    <!-- Search Input -->
+                    <div class="flex items-center w-48 relative">
+                        <i class="ri-search-line text-gray-400 mr-2 text-sm"></i>
+                        <input type="text" placeholder="Search for food..."
+                            class="bg-transparent border-none outline-none w-full text-xs placeholder-gray-400 text-gray-700 nav-search-input">
+                    </div>
+                </div>
+
+
+
+                <a href="cart.html"
+                    class="relative p-2.5 hover:bg-orange-50 text-gray-600 hover:text-primary rounded-full transition-all duration-300">
+                    <i class="ri-shopping-bag-3-line text-xl"></i>
+                    <span
+                        class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+                </a>
+
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors active:scale-95">
+                    <i class="ri-menu-4-line text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="md:hidden hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 z-50 origin-top">
+            <div class="p-4 flex flex-col gap-2">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-orange-50 text-primary font-bold">
+                    <i class="ri-home-4-line"></i> Home
+                </a>
+
+                <div class="border-t border-b border-gray-50 py-2 my-1">
+                    <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
+                    <a href="menu.html"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-restaurant-line"></i> All Items
+                    </a>
+                    <a href="menu.html?cat=Pizza"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-pie-chart-line"></i> Pizza
+                    </a>
+                    <a href="menu.html?cat=Burger"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-bread-line"></i> Burger
+                    </a>
+                </div>
+
+                <a href="about.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-information-line"></i> About Us
+                </a>
+                <a href="contact.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-customer-service-2-line"></i> Contact
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+
+        <div class="max-w-2xl mx-auto">
+            <!-- Order Header -->
+            <div
+                class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <p class="text-sm text-gray-500">Order ID</p>
+                    <h2 class="text-2xl font-bold text-gray-900" id="t-order-id">Please Login</h2>
+                </div>
+                <!-- ETA -->
+                <div class="bg-orange-50 px-6 py-3 rounded-xl">
+                    <p class="text-xs text-orange-600 font-bold uppercase tracking-wider mb-1">Estimated Arrival</p>
+                    <p class="text-2xl font-bold text-gray-900">25:00 <span
+                            class="text-sm font-normal text-gray-500">min</span></p>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-6 relative overflow-hidden">
+                <h3 class="font-bold text-gray-900 mb-8 border-b border-gray-100 pb-4">Order Status</h3>
+
+                <div class="relative pl-8 md:pl-0">
+                    <!-- Vertical Line (Mobile) / Horizontal (Desktop logic tricky with simple Tailwind, kept vertical for consistency) -->
+                    <div class="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gray-200"></div>
+
+                    <!-- Steps -->
+                    <div class="relative mb-8 pl-8">
+                        <div
+                            class="absolute left-0 top-0 w-6 h-6 bg-green-500 rounded-full border-4 border-white shadow-md z-10 flex items-center justify-center">
+                            <i class="ri-check-line text-white text-xs"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-900">Order Confirmed</h4>
+                        <p class="text-sm text-green-600 font-medium">Your order has been received</p>
+                        <p class="text-xs text-gray-400 mt-1" id="time-confirmed"></p>
+                    </div>
+
+                    <div class="relative mb-8 pl-8">
+                        <div
+                            class="absolute left-0 top-0 w-6 h-6 bg-primary rounded-full border-4 border-white shadow-md z-10 animate-pulse">
+                        </div>
+                        <h4 class="font-bold text-gray-900">Preparing Food</h4>
+                        <p class="text-sm text-gray-500">Chef is preparing your meal</p>
+                    </div>
+
+                    <div class="relative mb-8 pl-8 opacity-50">
+                        <div
+                            class="absolute left-0 top-0 w-6 h-6 bg-gray-300 rounded-full border-4 border-white shadow-md z-10">
+                        </div>
+                        <h4 class="font-bold text-gray-900">Out for Delivery</h4>
+                        <p class="text-sm text-gray-500">Rider is on the way</p>
+                    </div>
+
+                    <div class="relative pl-8 opacity-50">
+                        <div
+                            class="absolute left-0 top-0 w-6 h-6 bg-gray-300 rounded-full border-4 border-white shadow-md z-10">
+                        </div>
+                        <h4 class="font-bold text-gray-900">Delivered</h4>
+                        <p class="text-sm text-gray-500">Enjoy your meal!</p>
+                    </div>
+                </div>
+
+                <!-- Live Map Animated SVG -->
+                <div class="mt-8 bg-slate-50 border border-gray-100 rounded-2xl p-4 relative shadow-inner overflow-hidden">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Live Delivery Route</p>
+                    <div class="relative w-full h-[220px] bg-[#f1f5f9] rounded-xl overflow-hidden border border-gray-200">
+                        <!-- Grid overlay representing streets -->
+                        <div class="absolute inset-0 bg-[linear-gradient(rgba(203,213,225,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(203,213,225,0.3)_1px,transparent_1px)] bg-[size:30px_30px]"></div>
+                        
+                        <!-- Map Elements: Roads and Parks -->
+                        <div class="absolute top-10 left-20 w-16 h-12 bg-green-100/60 rounded-lg border border-green-200/50 flex items-center justify-center text-[10px] text-green-700 font-bold">Tasty Park</div>
+                        <div class="absolute bottom-6 right-20 w-24 h-10 bg-green-100/60 rounded-lg border border-green-200/50 flex items-center justify-center text-[10px] text-green-700 font-bold">Central Square</div>
+                        
+                        <!-- SVG Map Layer -->
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 500 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Curved Dotted Route -->
+                            <path id="route-path" class="map-route-line" d="M 30 150 C 70 80, 160 50, 250 110 C 340 170, 390 100, 470 50" stroke="#f97316" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                            
+                            <!-- Restaurant (Start Node) -->
+                            <circle cx="30" cy="150" r="8" fill="#1f2937" />
+                            <circle cx="30" cy="150" r="16" stroke="#1f2937" stroke-width="2" class="animate-ping opacity-25" />
+                            
+                            <!-- Destination (End Node) -->
+                            <circle cx="470" cy="50" r="8" fill="#22c55e" />
+                            <circle cx="470" cy="50" r="16" stroke="#22c55e" stroke-width="2" class="animate-ping opacity-25" />
+                            
+                            <!-- Animated Courier (Motorcycle) moving along path -->
+                            <g class="moving-rider">
+                                <circle cx="0" cy="0" r="12" fill="#ea580c" />
+                                <text x="-5" y="4" font-size="11" fill="white">🏍️</text>
+                            </g>
+                        </svg>
+                        
+                        <!-- Tooltips -->
+                        <div class="absolute bottom-6 left-6 bg-white border border-gray-150 rounded-lg px-2.5 py-1.5 shadow-sm text-[10px] font-bold text-gray-700 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-gray-800"></span> TastyTown Kitchen
+                        </div>
+                        <div class="absolute top-4 right-4 bg-white border border-gray-150 rounded-lg px-2.5 py-1.5 shadow-sm text-[10px] font-bold text-gray-700 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Your Home
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help -->
+            <div class="grid grid-cols-2 gap-4">
+                <button
+                    class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
+                    <i class="ri-phone-fill text-primary text-xl"></i>
+                    <span class="font-bold text-gray-700">Call Rider</span>
+                </button>
+                <button
+                    class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 text-green-600">
+                    <i class="ri-whatsapp-fill text-xl"></i>
+                    <span class="font-bold">Support</span>
+                </button>
+            </div>
+
+            <button id="reorder-btn"
+                class="w-full mt-6 bg-gray-900 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-gray-800 transition-all hidden">
+                Reorder Details
+            </button>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { addToCart, setupMobileMenu } from './js/main.js';
+
+        // Load Last Order
+        const lastOrder = JSON.parse(localStorage.getItem('last_order'));
+
+        if (lastOrder) {
+            document.getElementById('t-order-id').textContent = '#' + lastOrder.id;
+            document.getElementById('time-confirmed').textContent = new Date(lastOrder.date).toLocaleTimeString();
+
+            // Reorder Logic
+            const reorderBtn = document.getElementById('reorder-btn');
+            reorderBtn.classList.remove('hidden');
+            reorderBtn.addEventListener('click', () => {
+                // Add all items back to cart
+                if (confirm('Add items from this order to cart?')) {
+                    lastOrder.items.forEach(item => {
+                        addToCart(item, item.quantity, item.addOns);
+                    });
+                    window.location.href = 'cart.html';
+                }
+            });
+        }
+
+        setupMobileMenu();
+    </script>
+</body>
+
+</html>

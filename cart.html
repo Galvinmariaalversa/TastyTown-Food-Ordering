@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - TastyTown</title>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316',
+                        secondary: '#1f2937',
+                        light: '#f3f4f6',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased pb-20 md:pb-0">
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
+        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2.5 group">
+                <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
+                    <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21C16 16.5 19 13 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 13 8 16.5 12 21Z" fill="url(#logo-grad)" stroke="#ea580c" stroke-width="1.2" stroke-linejoin="round" />
+                        <path d="M8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12H8Z" fill="white" />
+                        <path d="M7 13.5H17" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+                        <circle cx="12" cy="7" r="0.5" fill="white" />
+                        <path d="M11 5.5C11.5 5 11.5 4.5 12 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <path d="M13 5.5C13.5 5 13.5 4.5 14 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <defs>
+                            <linearGradient id="logo-grad" x1="5" y1="2" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#f97316" />
+                                <stop offset="1" stop-color="#ea580c" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="font-heading font-extrabold text-xl text-gray-900 tracking-tight group-hover:text-primary transition-colors">Tasty<span class="text-primary">Town</span></span>
+                    <span class="text-[9px] text-gray-400 font-bold tracking-widest uppercase mt-0.5">Premium Delivery</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Home</a>
+
+                <!-- Dropdown -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-1 font-medium text-gray-600 group-hover:text-primary transition-colors py-2">
+                        Menu <i class="ri-arrow-down-s-line transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <div
+                        class="absolute top-full left-0 w-48 bg-white rounded-xl shadow-xl border border-gray-100 p-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                        <a href="menu.html"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">All
+                            Items</a>
+                        <a href="menu.html?cat=Pizza"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Pizza</a>
+                        <a href="menu.html?cat=Burger"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Burger</a>
+                        <a href="menu.html?cat=Biryani"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Biryani</a>
+                        <a href="menu.html?cat=Desserts"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Desserts</a>
+                    </div>
+                </div>
+
+                <a href="about.html" class="font-medium text-gray-600 hover:text-primary transition-colors">About</a>
+                <a href="contact.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Contact</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Location + Search Bar (Hidden Mobile) -->
+                <div class="hidden lg:flex items-center bg-gray-100 border border-gray-200/50 rounded-full px-3 py-1.5 gap-2 max-w-md shadow-sm">
+                    <!-- Location Selector Button -->
+                    <button class="flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors border-r border-gray-300 pr-2.5 nav-location-btn flex-shrink-0">
+                        <i class="ri-map-pin-line text-primary text-sm"></i>
+                        <span class="nav-location-name truncate max-w-[90px]">Manhattan, NY</span>
+                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                    </button>
+                    <!-- Search Input -->
+                    <div class="flex items-center w-48 relative">
+                        <i class="ri-search-line text-gray-400 mr-2 text-sm"></i>
+                        <input type="text" placeholder="Search for food..."
+                            class="bg-transparent border-none outline-none w-full text-xs placeholder-gray-400 text-gray-700 nav-search-input">
+                    </div>
+                </div>
+
+                <a href="cart.html"
+                    class="relative p-2.5 hover:bg-orange-50 text-gray-600 hover:text-primary rounded-full transition-all duration-300">
+                    <i class="ri-shopping-bag-3-line text-xl"></i>
+                    <span
+                        class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+                </a>
+
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors active:scale-95">
+                    <i class="ri-menu-4-line text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="md:hidden hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 z-50 origin-top">
+            <div class="p-4 flex flex-col gap-2">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-orange-50 text-primary font-bold">
+                    <i class="ri-home-4-line"></i> Home
+                </a>
+
+                <div class="border-t border-b border-gray-50 py-2 my-1">
+                    <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
+                    <a href="menu.html"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-restaurant-line"></i> All Items
+                    </a>
+                    <a href="menu.html?cat=Pizza"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-pie-chart-line"></i> Pizza
+                    </a>
+                    <a href="menu.html?cat=Burger"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-bread-line"></i> Burger
+                    </a>
+                </div>
+
+                <a href="about.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-information-line"></i> About Us
+                </a>
+                <a href="contact.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-customer-service-2-line"></i> Contact
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Header with Progress Tracker -->
+    <div class="bg-white py-6 border-b border-gray-100">
+        <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <a href="menu.html"
+                    class="w-10 h-10 rounded-full bg-gray-50 border border-gray-150 flex items-center justify-center hover:bg-gray-100 transition-colors"><i
+                        class="ri-arrow-left-line"></i></a>
+                <h1 class="font-heading text-2xl font-bold text-gray-900">Your Basket</h1>
+            </div>
+            
+            <!-- Progress Steps -->
+            <div class="flex items-center gap-2 text-sm font-semibold text-gray-400">
+                <span class="text-primary font-bold">1. Cart</span>
+                <i class="ri-arrow-right-s-line"></i>
+                <span>2. Checkout</span>
+                <i class="ri-arrow-right-s-line"></i>
+                <span>3. Track Order</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <section class="py-8 md:py-12 min-h-[60vh]">
+        <div class="container mx-auto px-4 md:px-6">
+
+            <div id="empty-cart-msg" class="hidden text-center py-20">
+                <div
+                    class="w-32 h-32 bg-orange-50 rounded-full flex items-center justify-center text-6xl mx-auto mb-6 text-primary opacity-50">
+                    <i class="ri-shopping-cart-2-fill"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Cart is empty</h2>
+                <p class="text-gray-500 mb-8">Looks like you haven't added anything yet.</p>
+                <a href="menu.html"
+                    class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-orange-600 transition-colors">Start
+                    Ordering</a>
+            </div>
+
+            <div id="cart-content" class="flex flex-col lg:flex-row gap-8">
+                <!-- Cart Items List -->
+                <div class="flex-1 space-y-4" id="cart-items-container">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Bill Summary -->
+                <div class="w-full lg:w-96">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
+
+                        <!-- Coupon -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Offers & Coupons</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="coupon-input" placeholder="Enter Code (TASTY10)"
+                                    class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 uppercase outline-none focus:ring-2 focus:ring-primary/20">
+                                <button id="apply-coupon-btn"
+                                    class="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-700">Apply</button>
+                            </div>
+                            <p id="coupon-msg" class="text-xs mt-2 hidden"></p>
+                        </div>
+
+                        <!-- Bill Details -->
+                        <h3 class="font-bold text-gray-900 mb-4 pb-4 border-b border-gray-100">Bill Details</h3>
+                        <div class="space-y-3 mb-4 text-sm text-gray-600">
+                            <div class="flex justify-between">
+                                <span>Item Total</span>
+                                <span id="bill-subtotal">₹0</span>
+                            </div>
+                            <div class="flex justify-between text-green-600 hidden" id="discount-row">
+                                <span>Discount (10%)</span>
+                                <span id="bill-discount">- ₹0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Delivery Fee</span>
+                                <span id="bill-delivery">₹40</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Taxes (5%)</span>
+                                <span id="bill-tax">₹0</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-200 mb-6">
+                            <span class="font-bold text-gray-900 text-lg">To Pay</span>
+                            <span class="font-bold text-primary text-xl" id="bill-total">₹0</span>
+                        </div>
+
+                        <button id="checkout-btn"
+                            class="w-full bg-primary text-white py-4 rounded-xl font-bold shadow-lg hover:bg-orange-600 transition-all">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended Add-ons -->
+    <section class="pb-20 bg-gray-50 pt-10 border-t border-gray-200" id="recommended-section">
+        <div class="container mx-auto px-4 md:px-6">
+            <h3 class="font-bold text-gray-900 mb-4">Complete your meal</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="recommended-grid">
+                <!-- JS -->
+            </div>
+        </div>
+    </section>
+
+    <script type="module">
+        import { foodItems } from './js/data.js';
+        import { formatCurrency, updateQuantity, removeFromCart, getCartTotal, showToast, setupMobileMenu } from './js/main.js';
+
+        // State check
+        let cart = JSON.parse(localStorage.getItem('tasty_cart')) || [];
+        let couponApplied = false;
+
+        const container = document.getElementById('cart-items-container');
+        const emptyMsg = document.getElementById('empty-cart-msg');
+        const cartContent = document.getElementById('cart-content');
+        const recommendedSection = document.getElementById('recommended-section');
+
+        // Render Cart
+        const renderCart = () => {
+            cart = JSON.parse(localStorage.getItem('tasty_cart')) || [];
+
+            if (cart.length === 0) {
+                cartContent.classList.add('hidden');
+                recommendedSection.classList.add('hidden');
+                emptyMsg.classList.remove('hidden');
+            } else {
+                cartContent.classList.remove('hidden');
+                recommendedSection.classList.remove('hidden');
+                emptyMsg.classList.add('hidden');
+
+                container.innerHTML = cart.map((item, index) => {
+                    const addOnsTotal = item.addOns ? item.addOns.reduce((sum, a) => sum + a.price, 0) : 0;
+                    const itemTotal = (item.price + addOnsTotal) * item.quantity;
+                    const addOnsText = item.addOns && item.addOns.length ? `<p class="text-xs text-gray-400 mt-1">Extra: ${item.addOns.map(a => a.name).join(', ')}</p>` : '';
+
+                    return `
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex gap-4 items-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                            <img src="${item.image}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-900">${item.name}</h3>
+                            <p class="text-sm text-gray-500">${formatCurrency(item.price)} ${addOnsTotal > 0 ? `+ ₹${addOnsTotal}` : ''}</p>
+                            ${addOnsText}
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                             <div class="flex items-center bg-gray-50 rounded-lg border border-gray-200 h-8">
+                                <button class="w-8 h-full flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-l-lg qty-btn" data-action="decrease" data-index="${index}">-</button>
+                                <span class="w-8 text-center text-sm font-bold">${item.quantity}</span>
+                                <button class="w-8 h-full flex items-center justify-center text-gray-600 hover:bg-gray-100 rounded-r-lg qty-btn" data-action="increase" data-index="${index}">+</button>
+                            </div>
+                            <span class="font-bold text-gray-900">${formatCurrency(itemTotal)}</span>
+                        </div>
+                    </div>
+                `}).join('');
+
+                updateBill();
+            }
+        };
+
+        const updateBill = () => {
+            const subtotal = cart.reduce((total, item) => {
+                const addOnsTotal = item.addOns ? item.addOns.reduce((sum, addon) => sum + addon.price, 0) : 0;
+                return total + ((item.price + addOnsTotal) * item.quantity);
+            }, 0);
+
+            const deliveryFee = 40;
+            const discount = couponApplied ? subtotal * 0.10 : 0;
+            const tax = (subtotal - discount) * 0.05;
+            const finalTotal = (subtotal - discount) + tax + deliveryFee;
+
+            document.getElementById('bill-subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('bill-delivery').textContent = formatCurrency(deliveryFee);
+            document.getElementById('bill-tax').textContent = formatCurrency(tax);
+            document.getElementById('bill-total').textContent = formatCurrency(finalTotal);
+
+            if (couponApplied) {
+                const row = document.getElementById('discount-row');
+                row.classList.remove('hidden');
+                document.getElementById('bill-discount').textContent = `- ${formatCurrency(discount)}`;
+            }
+        };
+
+        // Event delegation
+        container.addEventListener('click', (e) => {
+            const btn = e.target.closest('.qty-btn');
+            if (btn) {
+                const index = parseInt(btn.dataset.index);
+                const action = btn.dataset.action;
+
+                if (action === 'increase') {
+                    updateQuantity(index, 1);
+                } else {
+                    updateQuantity(index, -1);
+                }
+                renderCart(); // Re-render
+            }
+        });
+
+        // Coupon Logic
+        document.getElementById('apply-coupon-btn').addEventListener('click', () => {
+            const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const msg = document.getElementById('coupon-msg');
+
+            if (code === 'TASTY10') {
+                couponApplied = true;
+                msg.textContent = 'Coupon Applied Successfully! You saved 10%.';
+                msg.className = 'text-xs mt-2 text-green-600 block font-bold';
+                showToast('Coupon Applied!', 'success');
+                updateBill();
+            } else {
+                couponApplied = false;
+                msg.textContent = 'Invalid Coupon Code';
+                msg.className = 'text-xs mt-2 text-red-600 block font-bold';
+                showToast('Invalid Coupon', 'error');
+                updateBill();
+            }
+        });
+
+        // Checkout
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            // we could save final total to localstorage to show on checkout, but re-calculating is safer
+            window.location.href = 'checkout.html';
+        });
+
+        // Recommended (Simple logic: Drinks/Desserts if not present)
+        const recContainer = document.getElementById('recommended-grid');
+        const recItems = foodItems.filter(i => (i.category === 'Drinks' || i.category === 'Desserts')).slice(0, 4);
+
+        recContainer.innerHTML = recItems.map(item => `
+            <div class="bg-white p-3 rounded-xl border border-gray-100 flex flex-col items-center text-center shadow-sm">
+                <img src="${item.image}" class="w-16 h-16 rounded-full object-cover mb-2">
+                <h4 class="text-sm font-bold line-clamp-1">${item.name}</h4>
+                 <div class="flex items-center justify-between w-full mt-2">
+                     <span class="text-xs font-bold text-gray-500">${formatCurrency(item.price)}</span>
+                     <button class="add-rec-btn w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center" data-id="${item.id}"><i class="ri-add-line"></i></button>
+                 </div>
+            </div>
+        `).join('');
+
+        recContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('.add-rec-btn');
+            if (btn) {
+                // Import addToCart dynamically or use logic from main? 
+                // Since module scope, we removed addToCart from global scope.
+                // We imported addToCart at top.
+                const id = btn.dataset.id;
+                const item = foodItems.find(f => f.id === id);
+                if (item) {
+                    // We need to access the imported addToCart.
+                    // IMPORTANT: Since we are inside module, we can just call it.
+                    // BUT, we need to trigger re-render of cart.
+                    // The addToCart dispatches 'cartUpdated'.
+                    // We should listen to 'cartUpdated' to re-render renderCart() in this specific page?
+                    // Or just manually call renderCart() after a small timeout?
+                    // Better: standard addToCart logic + listener.
+                    import('./js/main.js').then(module => {
+                        module.addToCart(item);
+                    });
+                }
+            }
+        });
+
+        window.addEventListener('cartUpdated', renderCart);
+
+        renderCart();
+        setupMobileMenu();
+    </script>
+</body>
+
+</html>

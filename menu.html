@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - TastyTown</title>
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f97316',
+                        secondary: '#1f2937',
+                        light: '#f3f4f6',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        heading: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased pb-20 md:pb-0">
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
+        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2.5 group">
+                <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
+                    <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21C16 16.5 19 13 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 13 8 16.5 12 21Z" fill="url(#logo-grad)" stroke="#ea580c" stroke-width="1.2" stroke-linejoin="round" />
+                        <path d="M8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12H8Z" fill="white" />
+                        <path d="M7 13.5H17" stroke="white" stroke-width="1.2" stroke-linecap="round" />
+                        <circle cx="12" cy="7" r="0.5" fill="white" />
+                        <path d="M11 5.5C11.5 5 11.5 4.5 12 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <path d="M13 5.5C13.5 5 13.5 4.5 14 4.5" stroke="white" stroke-width="1" stroke-linecap="round" />
+                        <defs>
+                            <linearGradient id="logo-grad" x1="5" y1="2" x2="19" y2="21" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#f97316" />
+                                <stop offset="1" stop-color="#ea580c" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="font-heading font-extrabold text-xl text-gray-900 tracking-tight group-hover:text-primary transition-colors">Tasty<span class="text-primary">Town</span></span>
+                    <span class="text-[9px] text-gray-400 font-bold tracking-widest uppercase mt-0.5">Premium Delivery</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Home</a>
+
+                <!-- Dropdown -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-1 font-medium text-gray-600 group-hover:text-primary transition-colors py-2">
+                        Menu <i class="ri-arrow-down-s-line transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <div
+                        class="absolute top-full left-0 w-48 bg-white rounded-xl shadow-xl border border-gray-100 p-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+                        <a href="menu.html"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">All
+                            Items</a>
+                        <a href="menu.html?cat=Pizza"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Pizza</a>
+                        <a href="menu.html?cat=Burger"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Burger</a>
+                        <a href="menu.html?cat=Biryani"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Biryani</a>
+                        <a href="menu.html?cat=Desserts"
+                            class="block px-4 py-2 rounded-lg hover:bg-orange-50 hover:text-primary text-gray-600 text-sm font-medium">Desserts</a>
+                    </div>
+                </div>
+
+                <a href="about.html" class="font-medium text-gray-600 hover:text-primary transition-colors">About</a>
+                <a href="contact.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Contact</a>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Location + Search Bar (Hidden Mobile) -->
+                <div class="hidden lg:flex items-center bg-gray-100 border border-gray-200/50 rounded-full px-3 py-1.5 gap-2 max-w-md shadow-sm">
+                    <!-- Location Selector Button -->
+                    <button class="flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors border-r border-gray-300 pr-2.5 nav-location-btn flex-shrink-0">
+                        <i class="ri-map-pin-line text-primary text-sm"></i>
+                        <span class="nav-location-name truncate max-w-[90px]">Manhattan, NY</span>
+                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                    </button>
+                    <!-- Search Input -->
+                    <div class="flex items-center w-48 relative">
+                        <i class="ri-search-line text-gray-400 mr-2 text-sm"></i>
+                        <input type="text" id="global-search" placeholder="Search for food..."
+                            class="bg-transparent border-none outline-none w-full text-xs placeholder-gray-400 text-gray-700 nav-search-input">
+                    </div>
+                </div>
+
+                <a href="cart.html"
+                    class="relative p-2.5 hover:bg-orange-50 text-gray-600 hover:text-primary rounded-full transition-all duration-300">
+                    <i class="ri-shopping-bag-3-line text-xl"></i>
+                    <span
+                        class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
+                </a>
+
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors active:scale-95">
+                    <i class="ri-menu-4-line text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="md:hidden hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 z-50 origin-top">
+            <div class="p-4 flex flex-col gap-2">
+                <a href="index.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-orange-50 text-primary font-bold">
+                    <i class="ri-home-4-line"></i> Home
+                </a>
+
+                <div class="border-t border-b border-gray-50 py-2 my-1">
+                    <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
+                    <a href="menu.html"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-restaurant-line"></i> All Items
+                    </a>
+                    <a href="menu.html?cat=Pizza"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-pie-chart-line"></i> Pizza
+                    </a>
+                    <a href="menu.html?cat=Burger"
+                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
+                        <i class="ri-bread-line"></i> Burger
+                    </a>
+                </div>
+
+                <a href="about.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-information-line"></i> About Us
+                </a>
+                <a href="contact.html"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
+                    <i class="ri-customer-service-2-line"></i> Contact
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Header & Filters -->
+    <section class="bg-white pt-8 pb-4 border-b border-gray-100 sticky top-16 z-30">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <h1 class="font-heading text-2xl font-bold text-gray-900">Full Menu</h1>
+                <div class="flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar pb-2 md:pb-0">
+                    <button
+                        class="filter-btn active bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all shadow-md shadow-orange-100 hover:shadow-orange-200"
+                        data-filter="all">All 🍽️</button>
+                    <button
+                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                        data-filter="Pizza">Pizza 🍕</button>
+                    <button
+                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                        data-filter="Burger">Burger 🍔</button>
+                    <button
+                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                        data-filter="Biryani">Biryani 🍚</button>
+                    <button
+                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                        data-filter="Drinks">Drinks 🥤</button>
+                    <button
+                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                        data-filter="veg">Pure Veg 🌿</button>
+                    <button
+                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                        data-filter="non-veg">Non-Veg 🍗</button>
+                </div>
+            </div>
+
+            <!-- Mobile Search (Visible only on mobile) -->
+            <div class="md:hidden relative mb-4">
+                <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="mobile-search" placeholder="Search menu..."
+                    class="w-full bg-gray-100 rounded-lg pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/20">
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Grid -->
+    <section class="py-8 min-h-screen">
+        <div class="container mx-auto px-4 md:px-6">
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- JS Populated -->
+            </div>
+
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-20">
+                <div
+                    class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 text-gray-400">
+                    <i class="ri-search-2-line"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900">No items found</h3>
+                <p class="text-gray-500">Try changing your filters or search term.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Mini Cart (Mobile Only) -->
+    <div id="mini-cart"
+        class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 md:hidden z-50 transform translate-y-full transition-transform duration-300">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total</p>
+                <p class="text-lg font-bold text-gray-900" id="mini-cart-total">₹0</p>
+                <p class="text-xs text-gray-400" id="mini-cart-count">0 items</p>
+            </div>
+            <a href="cart.html"
+                class="bg-primary text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-orange-200 flex items-center gap-2">
+                View Cart <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { foodItems } from './js/data.js';
+        import { addToCart, formatCurrency, getCartTotal, getCartCount, setupMobileMenu } from './js/main.js';
+
+        const grid = document.getElementById('menu-grid');
+        const emptyState = document.getElementById('empty-state');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const globalSearch = document.getElementById('global-search');
+        const mobileSearch = document.getElementById('mobile-search');
+        const miniCart = document.getElementById('mini-cart');
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Check URL params for category
+        const urlParams = new URLSearchParams(window.location.search);
+        const catParam = urlParams.get('cat');
+        if (catParam) {
+            currentFilter = catParam;
+            // Update active button state
+            filterBtns.forEach(btn => {
+                if (btn.dataset.filter === catParam) {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-primary', 'text-white', 'shadow-md', 'shadow-orange-100');
+                        b.classList.add('bg-white', 'border', 'border-gray-200', 'text-gray-600');
+                    });
+                    btn.classList.remove('bg-white', 'border', 'border-gray-200', 'text-gray-600');
+                    btn.classList.add('bg-primary', 'text-white', 'shadow-md', 'shadow-orange-100');
+                }
+            });
+        }
+        
+        // Check URL params for search
+        const searchParam = urlParams.get('search');
+        if (searchParam) {
+            searchQuery = searchParam;
+            if (globalSearch) globalSearch.value = searchParam;
+            if (mobileSearch) mobileSearch.value = searchParam;
+        }
+
+        const renderMenu = () => {
+            let filtered = foodItems;
+
+            // Filter by Category/Type
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'veg') {
+                    filtered = filtered.filter(item => item.isVeg);
+                } else if (currentFilter === 'non-veg') {
+                    filtered = filtered.filter(item => !item.isVeg);
+                } else {
+                    filtered = filtered.filter(item => item.category === currentFilter);
+                }
+            }
+
+            // Filter by Search
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(item => item.name.toLowerCase().includes(q) || item.category.toLowerCase().includes(q));
+            }
+
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+
+                grid.innerHTML = filtered.map(item => `
+                   <div class="bg-white rounded-2xl p-4 shadow-md border border-gray-100 hover:shadow-lg hover-lift transition-all group h-full flex flex-col cursor-pointer product-card animate-fade-in" data-id="${item.id}">
+                        <div class="relative rounded-xl overflow-hidden h-48 mb-4 bg-gray-100">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-2 left-2 ${item.isVeg ? 'bg-green-600' : 'bg-red-600'} text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider">
+                                ${item.isVeg ? 'Veg' : 'Non-Veg'}
+                            </div>
+                            <div class="absolute bottom-2 right-2 bg-white px-2 py-1 rounded text-xs font-bold shadow-sm flex items-center gap-1">
+                                <i class="ri-star-fill text-yellow-400"></i> ${item.rating} <span class="text-gray-400 font-normal">(${item.reviewCount})</span>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col">
+                            <h3 class="font-bold text-gray-900 text-lg leading-tight mb-1 line-clamp-2">${item.name}</h3>
+                            <p class="text-sm text-gray-500 mb-4 line-clamp-2">${item.description}</p>
+                            
+                            <div class="mt-auto flex items-center justify-between">
+                                <span class="font-heading font-bold text-xl text-primary">${formatCurrency(item.price)}</span>
+                                <button class="add-btn w-10 h-10 bg-gray-100 text-gray-700 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-all shadow-sm" data-id="${item.id}">
+                                    <i class="ri-add-line text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                   </div>
+                `).join('');
+            }
+        };
+
+        // Event Listeners
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // UI Toggle
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'shadow-md', 'shadow-orange-100');
+                    b.classList.add('bg-white', 'border', 'border-gray-200', 'text-gray-600');
+                });
+                btn.classList.remove('bg-white', 'border', 'border-gray-200', 'text-gray-600');
+                btn.classList.add('bg-primary', 'text-white', 'shadow-md', 'shadow-orange-100');
+
+                currentFilter = btn.dataset.filter;
+                renderMenu();
+            });
+        });
+
+        const handleSearch = (e) => {
+            searchQuery = e.target.value;
+            renderMenu();
+        };
+
+        if (globalSearch) globalSearch.addEventListener('input', handleSearch);
+        if (mobileSearch) mobileSearch.addEventListener('input', handleSearch);
+
+        // Add to Cart
+        grid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.add-btn');
+            if (btn) {
+                e.stopPropagation(); // Prevent card click
+                const id = btn.dataset.id;
+                const item = foodItems.find(f => f.id === id);
+                if (item) {
+                    addToCart(item);
+                }
+            } else {
+                const card = e.target.closest('.product-card');
+                if (card) {
+                    window.location.href = `product.html?id=${card.dataset.id}`;
+                }
+            }
+        });
+
+        // Mini Cart Update Observer
+        const updateMiniCart = () => {
+            const count = getCartCount();
+            const total = getCartTotal();
+
+            document.getElementById('mini-cart-count').textContent = `${count} items`;
+            document.getElementById('mini-cart-total').textContent = formatCurrency(total);
+
+            if (count > 0) {
+                miniCart.classList.remove('translate-y-full');
+            } else {
+                miniCart.classList.add('translate-y-full');
+            }
+        };
+
+        // Listen for global cart updates
+        window.addEventListener('cartUpdated', updateMiniCart);
+
+        // Init
+        renderMenu();
+        updateMiniCart();
+        setupMobileMenu();
+
+        // Mobile Menu fix for sticking
+        const mobMenu = document.getElementById('mobile-menu');
+    </script>
+</body>
+
+</html>
