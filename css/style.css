@@ -282,7 +282,8 @@
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
 }
 
-body.modal-open {
+body.modal-open,
+body.menu-open {
     overflow: hidden;
 }
 
@@ -352,84 +353,728 @@ body.modal-open {
 
 
 
-/* --- Chef AI Chatbot --- */
+/* --- Premium Chef AI Chatbot --- */
+
+/* === FAB Button === */
 .chef-ai-fab {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     border-radius: 9999px;
-    background: linear-gradient(135deg, #f97316, #ef4444);
-    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.35);
+    background: linear-gradient(135deg, #f97316 0%, #ef4444 50%, #ec4899 100%);
+    box-shadow: 0 8px 32px rgba(249, 115, 22, 0.4), 0 0 0 0 rgba(249, 115, 22, 0);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 28px;
     cursor: pointer;
-    z-index: 45;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    z-index: 9999;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+    animation: fab-pulse-ring 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.chef-ai-fab .fab-icon {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chef-ai-fab.active .fab-icon {
+    transform: rotate(90deg);
 }
 
 .chef-ai-fab:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 15px 30px rgba(239, 68, 68, 0.45);
+    transform: scale(1.12) rotate(3deg);
+    box-shadow: 0 12px 40px rgba(249, 115, 22, 0.5), 0 0 20px rgba(249, 115, 22, 0.2);
+    animation: none;
 }
 
+/* Unread notification dot */
+.chef-ai-fab .fab-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 14px;
+    height: 14px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2.5px solid white;
+    animation: badge-ping 2s infinite;
+}
+
+@keyframes fab-pulse-ring {
+    0% { box-shadow: 0 8px 32px rgba(249, 115, 22, 0.4), 0 0 0 0 rgba(249, 115, 22, 0.35); }
+    70% { box-shadow: 0 8px 32px rgba(249, 115, 22, 0.4), 0 0 0 18px rgba(249, 115, 22, 0); }
+    100% { box-shadow: 0 8px 32px rgba(249, 115, 22, 0.4), 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+
+@keyframes badge-ping {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.8; }
+}
+
+/* === Chat Panel Container === */
 .chef-ai-chatbox {
     position: fixed;
-    bottom: 96px;
+    bottom: 100px;
     right: 24px;
-    width: 370px;
-    height: 520px;
-    background: white;
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    height: 560px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-radius: 28px;
     display: flex;
     flex-direction: column;
-    z-index: 45;
+    z-index: 9998;
     overflow: hidden;
-    border: 1px solid rgba(229, 231, 235, 0.8);
-    transform: scale(0.9) translateY(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transform: scale(0.85) translateY(30px);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    filter: blur(4px);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.35s ease,
+                filter 0.35s ease;
+    box-shadow:
+        0 24px 80px -12px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(249, 115, 22, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
+.dark .chef-ai-chatbox {
+    background: rgba(15, 23, 42, 0.92);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 24px 80px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(249, 115, 22, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
 
+/* Animated gradient border overlay */
+.chef-ai-chatbox::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 29px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6, #f97316);
+    background-size: 300% 300%;
+    animation: gradient-border-shift 4s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+@keyframes gradient-border-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
 
 .chef-ai-chatbox.open {
     transform: scale(1) translateY(0);
     opacity: 1;
     pointer-events: auto;
+    filter: blur(0);
+}
+
+/* === Premium Header === */
+.chef-ai-header {
+    position: relative;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #f97316, #ef4444, #ec4899);
+    background-size: 200% 200%;
+    animation: header-gradient-shift 6s ease infinite;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    z-index: 2;
+}
+
+@keyframes header-gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Shimmer overlay on header */
+.chef-ai-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    animation: header-shimmer 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes header-shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+.chef-ai-header .chef-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.35);
+    box-shadow: 0 0 16px rgba(255,255,255,0.15);
+    animation: avatar-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes avatar-glow {
+    0% { box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+    100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+}
+
+.chef-ai-header .status-dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.chef-ai-header .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid #4ade80;
+    animation: status-ring-pulse 2s infinite;
+}
+
+@keyframes status-ring-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.6); opacity: 0; }
+}
+
+.chef-ai-header .close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 18px;
+}
+
+.chef-ai-header .close-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: rotate(90deg);
+}
+
+/* === Message Area === */
+.chef-ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+}
+
+.dark .chef-ai-messages {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+}
+
+/* Bot message bubble */
+.chef-msg-bot {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: msg-slide-in-left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.chef-msg-bot .msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    border: 1px solid #fed7aa;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
+}
+
+.dark .chef-msg-bot .msg-avatar {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(239, 68, 68, 0.1));
+    border-color: rgba(249, 115, 22, 0.3);
+}
+
+.chef-msg-bot .msg-bubble {
+    max-width: 78%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    border-left: 3px solid #f97316;
+    border-radius: 2px 18px 18px 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #374151;
+    box-shadow: 0 4px 16px -4px rgba(0,0,0,0.06);
+}
+
+.dark .chef-msg-bot .msg-bubble {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(51, 65, 85, 0.6);
+    border-left-color: #f97316;
+    color: #e2e8f0;
+}
+
+.chef-msg-bot .msg-time {
+    font-size: 9px;
+    color: #9ca3af;
+    margin-top: 4px;
+    padding-left: 42px;
+}
+
+/* User message bubble */
+.chef-msg-user {
+    display: flex;
+    justify-content: flex-end;
+    animation: msg-slide-in-right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.chef-msg-user .msg-bubble {
+    max-width: 78%;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border-radius: 18px 2px 18px 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    box-shadow: 0 6px 20px -4px rgba(249, 115, 22, 0.35);
+}
+
+.chef-msg-user .msg-time {
+    font-size: 9px;
+    color: #9ca3af;
+    margin-top: 4px;
+    text-align: right;
+}
+
+@keyframes msg-slide-in-left {
+    from { opacity: 0; transform: translateX(-16px) translateY(6px); }
+    to { opacity: 1; transform: translateX(0) translateY(0); }
+}
+
+@keyframes msg-slide-in-right {
+    from { opacity: 0; transform: translateX(16px) translateY(6px); }
+    to { opacity: 1; transform: translateX(0) translateY(0); }
+}
+
+/* === Premium Item Cards === */
+.chef-item-card {
+    margin-left: 42px;
+    max-width: 80%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    border-radius: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    animation: msg-slide-in-left 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.dark .chef-item-card {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(51, 65, 85, 0.5);
+}
+
+.chef-item-card:hover {
+    box-shadow: 0 8px 30px -4px rgba(249, 115, 22, 0.15);
+    border-color: rgba(249, 115, 22, 0.3);
+    transform: translateY(-2px);
+}
+
+.chef-item-card img {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.chef-item-card .item-info h5 {
+    font-weight: 700;
+    font-size: 12px;
+    color: #111827;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.dark .chef-item-card .item-info h5 {
+    color: #f1f5f9;
+}
+
+.chef-item-card .item-price {
+    font-size: 13px;
+    font-weight: 800;
+    color: #f97316;
+    margin-top: 2px;
+}
+
+.chef-item-card .item-rating {
+    font-size: 9px;
+    color: #eab308;
+    margin-top: 1px;
+    letter-spacing: 1px;
+}
+
+.chef-item-card .add-cart-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border: 1px solid #fed7aa;
+    color: #f97316;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dark .chef-item-card .add-cart-btn {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.2));
+    border-color: rgba(249, 115, 22, 0.3);
+}
+
+.chef-item-card .add-cart-btn:hover {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border-color: #f97316;
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+}
+
+.chef-item-card .add-cart-btn.added {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-color: #22c55e;
+    animation: cart-success-pulse 0.5s ease;
+}
+
+@keyframes cart-success-pulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+/* === Quick Reply Buttons === */
+.chef-quick-replies {
+    padding: 10px 14px;
+    border-top: 1px solid rgba(229, 231, 235, 0.5);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.chef-quick-replies::-webkit-scrollbar { display: none; }
+
+.dark .chef-quick-replies {
+    background: rgba(15, 23, 42, 0.6);
+    border-top-color: rgba(51, 65, 85, 0.5);
+}
+
+.chef-reply-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    background: rgba(255, 247, 237, 0.8);
+    color: #ea580c;
+    border: 1.5px solid rgba(253, 186, 116, 0.5);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+}
+
+.dark .chef-reply-btn {
+    background: rgba(249, 115, 22, 0.08);
+    color: #fb923c;
+    border-color: rgba(249, 115, 22, 0.25);
+}
+
+.chef-reply-btn:hover {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border-color: #f97316;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px -4px rgba(249, 115, 22, 0.35);
+}
+
+.chef-reply-btn:nth-child(1) { animation: quick-reply-enter 0.4s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.chef-reply-btn:nth-child(2) { animation: quick-reply-enter 0.4s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.chef-reply-btn:nth-child(3) { animation: quick-reply-enter 0.4s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.chef-reply-btn:nth-child(4) { animation: quick-reply-enter 0.4s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes quick-reply-enter {
+    from { opacity: 0; transform: translateY(10px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* === Premium Input Area === */
+.chef-input-area {
+    padding: 14px 16px;
+    border-top: 1px solid rgba(229, 231, 235, 0.4);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 2;
+}
+
+.dark .chef-input-area {
+    background: rgba(15, 23, 42, 0.85);
+    border-top-color: rgba(51, 65, 85, 0.5);
+}
+
+.chef-input-wrapper {
+    flex: 1;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* Animated gradient border on focus */
+.chef-input-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 17px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6, #f97316);
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradient-border-shift 3s ease infinite;
+    pointer-events: none;
+}
+
+.chef-input-wrapper:focus-within::before {
+    opacity: 1;
+}
+
+.chef-input-wrapper input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid rgba(209, 213, 219, 0.5);
+    border-radius: 16px;
+    background: rgba(249, 250, 251, 0.8);
+    font-size: 13px;
+    color: #374151;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.dark .chef-input-wrapper input {
+    background: rgba(30, 41, 59, 0.6);
+    border-color: rgba(51, 65, 85, 0.5);
+    color: #e2e8f0;
+}
+
+.chef-input-wrapper input:focus {
+    border-color: transparent;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.dark .chef-input-wrapper input:focus {
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.chef-send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 16px -2px rgba(249, 115, 22, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.chef-send-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 24px -2px rgba(249, 115, 22, 0.45);
+}
+
+.chef-send-btn:active {
+    transform: scale(0.92) !important;
+}
+
+/* Send button ripple effect */
+.chef-send-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(255,255,255,0.3);
+    transform: scale(0);
+    opacity: 0;
+    transition: none;
+}
+
+.chef-send-btn.ripple::after {
+    animation: btn-ripple 0.5s ease-out;
+}
+
+@keyframes btn-ripple {
+    from { transform: scale(0); opacity: 1; }
+    to { transform: scale(2.5); opacity: 0; }
+}
+
+/* === Premium Typing Indicator === */
+.chef-typing-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: msg-slide-in-left 0.35s ease both;
+}
+
+.chef-typing-wrap .msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    border: 1px solid #fed7aa;
+}
+
+.dark .chef-typing-wrap .msg-avatar {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(239, 68, 68, 0.1));
+    border-color: rgba(249, 115, 22, 0.3);
 }
 
 .typing-indicator {
     display: flex;
+    flex-direction: column;
     gap: 4px;
-    padding: 8px 12px;
-    background: #f3f4f6;
-    border-radius: 12px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    border-left: 3px solid #f97316;
+    border-radius: 2px 16px 16px 16px;
     width: fit-content;
 }
 
-
-
-.typing-indicator span {
-    width: 6px;
-    height: 6px;
-    background: #9ca3af;
-    border-radius: 50%;
-    animation: typing-bounce 1s infinite ease-in-out;
+.dark .typing-indicator {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(51, 65, 85, 0.5);
+    border-left-color: #f97316;
 }
 
-.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+.typing-dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
 
-@keyframes typing-bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+.typing-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    animation: premium-typing-bounce 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { background: #f97316; animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { background: #ef4444; animation-delay: 0.15s; }
+.typing-indicator span:nth-child(3) { background: #ec4899; animation-delay: 0.3s; }
+
+.typing-indicator .typing-label {
+    font-size: 9px;
+    color: #9ca3af;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+@keyframes premium-typing-bounce {
+    0%, 80%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+    40% { transform: translateY(-6px) scale(1.15); opacity: 1; }
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 640px) {
+    .chef-ai-chatbox {
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        max-height: 100dvh;
+    }
+
+    .chef-ai-chatbox::before {
+        border-radius: 0;
+    }
+
+    .chef-ai-chatbox.open {
+        transform: scale(1) translateY(0);
+    }
+
+    .chef-ai-fab {
+        bottom: 16px;
+        right: 16px;
+    }
 }
 
 /* --- Dish Roulette Section --- */
@@ -670,4 +1315,95 @@ body.modal-open {
         transform: scale(0.85);
         margin: -24px auto; /* Compensate for scaled height collapse */
     }
+}
+
+/* --- Premium Skeleton Loader Animations --- */
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-pulse {
+    background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite linear;
+}
+
+/* Button Active Press Scaling */
+button:active,
+.add-btn:active,
+a.bg-primary:active,
+.chef-reply-btn:active {
+    transform: scale(0.96) !important;
+    transition: transform 0.1s ease-in-out;
+}
+
+/* Accessibility Focus outlines */
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline: 2px solid #f97316 !important;
+    outline-offset: 2px !important;
+}
+
+/* Fix placeholder contrast globally */
+input::placeholder,
+textarea::placeholder {
+    color: #6b7280 !important;
+    opacity: 1 !important; /* Ensure it is fully opaque in Firefox */
+}
+
+/* --- Premium Mobile Navigation Drawer --- */
+#mobile-menu.animate-fade-in {
+    display: block !important;
+}
+
+#mobile-menu.animate-fade-in .mobile-menu-backdrop {
+    animation: fade-in-backdrop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#mobile-menu.animate-fade-in .mobile-menu-drawer {
+    animation: slide-in-drawer 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#mobile-menu.animate-fade-out .mobile-menu-backdrop {
+    animation: fade-out-backdrop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#mobile-menu.animate-fade-out .mobile-menu-drawer {
+    animation: slide-out-drawer 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-backdrop {
+    from { opacity: 0; pointer-events: none; }
+    to { opacity: 1; pointer-events: auto; }
+}
+
+@keyframes fade-out-backdrop {
+    from { opacity: 1; pointer-events: auto; }
+    to { opacity: 0; pointer-events: none; }
+}
+
+@keyframes slide-in-drawer {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes slide-out-drawer {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+}
+
+/* Custom premium hover states for inactive filter buttons */
+.filter-btn:not(.active):hover {
+    border-color: rgba(249, 115, 22, 0.4) !important;
+    color: #f97316 !important;
+    background-color: rgba(249, 115, 22, 0.05) !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.05);
 }

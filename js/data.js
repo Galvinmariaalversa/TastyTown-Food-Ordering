@@ -224,3 +224,16 @@ export const foodItems = [
         bestseller: false
     }
 ];
+
+// Dynamically optimize Unsplash images to WebP format
+const optimizeImageUrl = (item) => {
+    if (item.image && item.image.includes('unsplash.com')) {
+        item.image = item.image.replace('auto=format', 'fm=webp');
+        if (!item.image.includes('fm=webp')) {
+            item.image += '&fm=webp';
+        }
+    }
+    return item;
+};
+categories.forEach(optimizeImageUrl);
+foodItems.forEach(optimizeImageUrl);

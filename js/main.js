@@ -25,8 +25,53 @@ export const saveCart = () => {
     window.dispatchEvent(new Event('cartUpdated'));
 };
 
+// --- Audio Feedback ---
+export const playAddCartSound = () => {
+    try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        const ctx = new AudioContextClass();
+        
+        // Simple double chime: pleasant ascending notes
+        const now = ctx.currentTime;
+        
+        // Chime 1 (D5 to A5)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(587.33, now); // D5
+        osc1.frequency.exponentialRampToValueAtTime(880.00, now + 0.15); // A5
+        
+        gain1.gain.setValueAtTime(0.15, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.3);
+        
+        // Chime 2 (A5 to D6)
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(880.00, now + 0.08); // A5
+        osc2.frequency.exponentialRampToValueAtTime(1174.66, now + 0.25); // D6
+        
+        gain2.gain.setValueAtTime(0.12, now + 0.08);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now + 0.08);
+        osc2.stop(now + 0.4);
+    } catch (e) {
+        console.warn('Web Audio API not supported or blocked:', e);
+    }
+};
+
 // --- Cart Actions ---
 export const addToCart = (product, quantity = 1, addOns = []) => {
+    playAddCartSound();
     const existingItemIndex = state.cart.findIndex(item => item.id === product.id && JSON.stringify(item.addOns) === JSON.stringify(addOns));
 
     if (existingItemIndex > -1) {
@@ -523,15 +568,24 @@ export const initLocationPicker = () => {
     });
     
     // Custom location inputs
-    customSaveBtn.addEventListener('click', () => {
+    const saveLocationAction = () => {
         const val = customInput.value.trim();
-        if (val) {
+        const addressRegex = /[a-zA-Z]/;
+        if (val.length >= 4 && addressRegex.test(val)) {
             localStorage.setItem('tasty_location', val);
             updateLocationDisplays(val);
             showToast(`Delivery location set to ${val}`, 'success');
             closeModal();
         } else {
-            showToast('Please type an address', 'error');
+            showToast('Please enter a valid address (at least 4 characters containing letters)', 'error');
+        }
+    };
+
+    customSaveBtn.addEventListener('click', saveLocationAction);
+    customInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            saveLocationAction();
         }
     });
 };
@@ -654,10 +708,18 @@ export const initTableBooking = () => {
 // Setup Mobile Menu
 export const setupMobileMenu = () => {
     const btn = document.getElementById('mobile-menu-btn');
+    if (btn && btn.dataset.menuInitialized) return;
+
     const menu = document.getElementById('mobile-menu');
     const icon = btn ? btn.querySelector('i') : null;
 
     if (btn && menu && icon) {
+        btn.dataset.menuInitialized = "true";
+        const closeBtn = menu.querySelector('#mobile-menu-close-btn');
+        const backdrop = menu.querySelector('.mobile-menu-backdrop');
+        const drawerSearch = menu.querySelector('.mobile-drawer-search');
+        const bookTableBtn = menu.querySelector('.mobile-book-table-btn');
+
         const openMenu = () => {
             menu.classList.remove('hidden');
             menu.classList.add('animate-fade-in');
@@ -665,6 +727,8 @@ export const setupMobileMenu = () => {
 
             icon.classList.remove('ri-menu-4-line');
             icon.classList.add('ri-close-line');
+            document.body.classList.add('menu-open');
+            btn.setAttribute('aria-expanded', 'true');
         };
 
         const closeMenu = () => {
@@ -673,6 +737,8 @@ export const setupMobileMenu = () => {
 
             icon.classList.remove('ri-close-line');
             icon.classList.add('ri-menu-4-line');
+            document.body.classList.remove('menu-open');
+            btn.setAttribute('aria-expanded', 'false');
 
             // Wait for animation to finish before hiding
             setTimeout(() => {
@@ -683,7 +749,8 @@ export const setupMobileMenu = () => {
             }, 300);
         };
 
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
             const isHidden = menu.classList.contains('hidden');
             if (isHidden) {
                 openMenu();
@@ -692,17 +759,76 @@ export const setupMobileMenu = () => {
             }
         });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!menu.contains(e.target) && !btn.contains(e.target) && !menu.classList.contains('hidden')) {
+        // Close on close button click
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 closeMenu();
-            }
-        });
+            });
+        }
+
+        // Close on backdrop click
+        if (backdrop) {
+            backdrop.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeMenu();
+            });
+        }
 
         // Close menu on link click
         menu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
+            link.addEventListener('click', (e) => {
+                if (link.classList.contains('mobile-drawer-cart-link')) {
+                    const path = window.location.pathname;
+                    if (!path.includes('cart.html') && !path.includes('checkout.html')) {
+                        e.preventDefault();
+                        closeMenu();
+                        setTimeout(() => {
+                            openCartDrawer();
+                        }, 350);
+                        return;
+                    }
+                }
+                closeMenu();
+            });
         });
+
+        // Search redirect inside mobile menu drawer
+        if (drawerSearch) {
+            drawerSearch.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const query = drawerSearch.value.trim();
+                    if (query) {
+                        closeMenu();
+                        window.location.href = `menu.html?search=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+        }
+
+        // Book table connection in drawer
+        if (bookTableBtn) {
+            bookTableBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeMenu();
+                // Trigger table booking modal
+                const bookTableCard = document.getElementById('book-table-card') || document.querySelector('[href="#book-table"]');
+                if (bookTableCard) {
+                    bookTableCard.click();
+                } else {
+                    const bookingWrapper = document.getElementById('booking-modal');
+                    if (bookingWrapper) {
+                        bookingWrapper.classList.remove('hidden');
+                        document.body.classList.add('modal-open');
+                        requestAnimationFrame(() => {
+                            bookingWrapper.classList.add('show-modal');
+                        });
+                    } else {
+                        window.location.href = 'index.html#dish-roulette-sec';
+                    }
+                }
+            });
+        }
     }
 };
 
@@ -732,53 +858,59 @@ const injectChefAI = () => {
     
     const chatbotHTML = `
         <div id="chef-ai-container">
-            <!-- FAB Bubble -->
+            <!-- Premium FAB Bubble -->
             <div id="chef-ai-fab" class="chef-ai-fab">
-                <i class="ri-chat-smile-3-line"></i>
+                <span class="fab-badge"></span>
+                <span class="fab-icon">
+                    <i class="ri-chat-smile-3-line"></i>
+                </span>
             </div>
             
-            <!-- Chat Drawer Panel -->
+            <!-- Premium Chat Drawer Panel -->
             <div id="chef-ai-chatbox" class="chef-ai-chatbox">
-                <!-- Header -->
-                <div class="p-4 bg-gradient-to-r from-orange-500 to-red-500 text-white flex items-center justify-between shadow-md">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg">
-                            👨‍🍳
-                        </div>
+                <!-- Glassmorphic Header -->
+                <div class="chef-ai-header">
+                    <div class="flex items-center gap-3">
+                        <div class="chef-avatar">👨‍🍳</div>
                         <div>
-                            <h4 class="font-heading font-bold text-sm">Chef Gourmet AI</h4>
-                            <p class="text-[9px] text-orange-100 flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-ping"></span> Online
+                            <h4 style="font-weight:800; font-size:14px; letter-spacing:0.3px; margin:0;">Chef Gourmet AI</h4>
+                            <p style="font-size:10px; display:flex; align-items:center; gap:5px; margin:2px 0 0 0; opacity:0.9;">
+                                <span class="status-dot"></span> Online — Ready to help
                             </p>
                         </div>
                     </div>
-                    <button id="close-chef-ai" class="w-7 h-7 rounded-full hover:bg-white/10 flex items-center justify-center text-white transition-colors">
-                        <i class="ri-close-line text-xl"></i>
+                    <button id="close-chef-ai" class="close-btn" aria-label="Close chat">
+                        <i class="ri-close-line"></i>
                     </button>
                 </div>
                 
-                <!-- Chat History -->
-                <div id="chef-ai-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/50 dark:bg-slate-900/50 no-scrollbar">
-                    <div class="flex gap-2">
-                        <div class="w-7 h-7 rounded-full bg-orange-100 dark:bg-orange-950/40 flex items-center justify-center text-xs flex-shrink-0">👨‍🍳</div>
-                        <div class="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700/80 p-3 rounded-2xl rounded-tl-none max-w-[80%] text-xs shadow-sm">
-                            <p class="text-gray-800 dark:text-gray-100 font-medium">Hello food lover! I am your AI Chef Assistant. Let me help you find the perfect dish today! What are you craving?</p>
+                <!-- Message Area -->
+                <div id="chef-ai-messages" class="chef-ai-messages no-scrollbar">
+                    <div class="chef-msg-bot">
+                        <div class="msg-avatar">👨‍🍳</div>
+                        <div>
+                            <div class="msg-bubble">
+                                <p style="margin:0; font-weight:500;">Hello food lover! 👋 I'm your <strong>AI Chef Assistant</strong>. Let me help you discover the perfect dish today! What are you craving?</p>
+                            </div>
+                            <div class="msg-time">Just now</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Quick Suggestion Buttons -->
-                <div id="chef-ai-quick-replies" class="p-2.5 border-t border-gray-150/80 dark:border-slate-700 bg-white dark:bg-slate-800 flex gap-1.5 overflow-x-auto no-scrollbar">
-                    <button class="chef-reply-btn flex-shrink-0 bg-orange-50 hover:bg-orange-100 dark:bg-orange-950/20 dark:hover:bg-orange-950/40 text-primary border border-orange-100 dark:border-orange-950/40 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all" data-query="spicy">🔥 Spicy Dishes</button>
-                    <button class="chef-reply-btn flex-shrink-0 bg-orange-50 hover:bg-orange-100 dark:bg-orange-950/20 dark:hover:bg-orange-950/40 text-primary border border-orange-100 dark:border-orange-950/40 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all" data-query="veg">🥗 Vegetarian Specialties</button>
-                    <button class="chef-reply-btn flex-shrink-0 bg-orange-50 hover:bg-orange-100 dark:bg-orange-950/20 dark:hover:bg-orange-950/40 text-primary border border-orange-100 dark:border-orange-950/40 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all" data-query="sweet">🍦 Something Sweet</button>
-                    <button class="chef-reply-btn flex-shrink-0 bg-orange-50 hover:bg-orange-100 dark:bg-orange-950/20 dark:hover:bg-orange-950/40 text-primary border border-orange-100 dark:border-orange-950/40 px-3 py-1.5 rounded-full text-[10px] font-bold transition-all" data-query="bestseller">⭐ Bestseller picks</button>
+                <!-- Quick Reply Buttons -->
+                <div id="chef-ai-quick-replies" class="chef-quick-replies">
+                    <button class="chef-reply-btn" data-query="spicy">🔥 Spicy Dishes</button>
+                    <button class="chef-reply-btn" data-query="veg">🥗 Vegetarian</button>
+                    <button class="chef-reply-btn" data-query="sweet">🍦 Desserts</button>
+                    <button class="chef-reply-btn" data-query="bestseller">⭐ Bestsellers</button>
                 </div>
                 
-                <!-- Message Input -->
-                <div class="p-3 border-t border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800 flex gap-2">
-                    <input type="text" id="chef-ai-input" placeholder="Ask for suggestions or ingredients..." class="flex-1 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs outline-none focus:ring-1 focus:ring-primary text-gray-800 dark:text-gray-100">
-                    <button id="chef-ai-send" class="w-8 h-8 bg-primary hover:bg-orange-600 text-white rounded-xl flex items-center justify-center transition-colors flex-shrink-0">
+                <!-- Premium Input Area -->
+                <div class="chef-input-area">
+                    <div class="chef-input-wrapper">
+                        <input type="text" id="chef-ai-input" placeholder="Ask for suggestions or ingredients..." autocomplete="off">
+                    </div>
+                    <button id="chef-ai-send" class="chef-send-btn" aria-label="Send message">
                         <i class="ri-send-plane-fill"></i>
                     </button>
                 </div>
@@ -797,21 +929,49 @@ const injectChefAI = () => {
     const sendBtn = document.getElementById('chef-ai-send');
     const messages = document.getElementById('chef-ai-messages');
     
-    fab.addEventListener('click', () => {
-        chatbox.classList.toggle('open');
-    });
+    const fabIcon = fab.querySelector('.fab-icon i');
+    const fabBadge = fab.querySelector('.fab-badge');
     
-    closeBtn.addEventListener('click', () => {
+    const openChat = () => {
+        chatbox.classList.add('open');
+        fab.classList.add('active');
+        fabIcon.className = 'ri-close-line';
+        if (fabBadge) fabBadge.style.display = 'none';
+        setTimeout(() => input.focus(), 400);
+    };
+    
+    const closeChat = () => {
         chatbox.classList.remove('open');
+        fab.classList.remove('active');
+        fabIcon.className = 'ri-chat-smile-3-line';
+    };
+    
+    fab.addEventListener('click', () => {
+        if (chatbox.classList.contains('open')) {
+            closeChat();
+        } else {
+            openChat();
+        }
     });
     
-    sendBtn.addEventListener('click', () => {
-        handleUserMessage(input.value.trim());
-    });
+    closeBtn.addEventListener('click', closeChat);
+    
+    // Send with ripple effect
+    const triggerSend = () => {
+        const text = input.value.trim();
+        if (!text) return;
+        sendBtn.classList.remove('ripple');
+        void sendBtn.offsetWidth; // force reflow
+        sendBtn.classList.add('ripple');
+        handleUserMessage(text);
+        setTimeout(() => sendBtn.classList.remove('ripple'), 500);
+    };
+    
+    sendBtn.addEventListener('click', triggerSend);
     
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            handleUserMessage(input.value.trim());
+            triggerSend();
         }
     });
     
@@ -882,17 +1042,23 @@ const appendMessage = (sender, text) => {
     const msg = document.createElement('div');
     msg.className = 'flex gap-2 ' + (sender === 'user' ? 'justify-end' : '');
     
+    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
     if (sender === 'user') {
+        msg.className = 'chef-msg-user';
         msg.innerHTML = `
-            <div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none max-w-[80%] text-xs shadow-sm shadow-orange-100">
-                <p>${text}</p>
+            <div>
+                <div class="msg-bubble"><p style="margin:0">${text}</p></div>
+                <div class="msg-time">${timeStr}</div>
             </div>
         `;
     } else {
+        msg.className = 'chef-msg-bot';
         msg.innerHTML = `
-            <div class="w-7 h-7 rounded-full bg-orange-100 dark:bg-orange-950/40 flex items-center justify-center text-xs flex-shrink-0">👨‍🍳</div>
-            <div class="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700/80 p-3 rounded-2xl rounded-tl-none max-w-[80%] text-xs shadow-sm">
-                <p class="text-gray-800 dark:text-gray-100">${text}</p>
+            <div class="msg-avatar">👨‍🍳</div>
+            <div>
+                <div class="msg-bubble"><p style="margin:0">${text}</p></div>
+                <div class="msg-time">${timeStr}</div>
             </div>
         `;
     }
@@ -902,20 +1068,29 @@ const appendMessage = (sender, text) => {
 const appendItemCard = (item) => {
     const container = document.getElementById('chef-ai-messages');
     const card = document.createElement('div');
-    card.className = 'ml-9 bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700/85 p-3 rounded-xl shadow-sm flex gap-3 items-center max-w-[80%] animate-fade-in';
+    card.className = 'chef-item-card';
+    const stars = '★'.repeat(Math.min(5, Math.floor(3.5 + Math.random() * 1.5))) + '☆'.repeat(Math.max(0, 5 - Math.floor(3.5 + Math.random() * 1.5)));
     card.innerHTML = `
-        <img src="${item.image}" class="w-11 h-11 object-cover rounded-lg flex-shrink-0">
-        <div class="flex-1 min-w-0">
-            <h5 class="font-bold text-[11px] text-gray-900 dark:text-gray-100 truncate">${item.name}</h5>
-            <p class="text-[10px] text-primary font-bold mt-0.5">₹${item.price}</p>
+        <img src="${item.image}" alt="${item.name}">
+        <div class="item-info" style="flex:1; min-width:0;">
+            <h5 style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${item.name}</h5>
+            <div class="item-price">₹${item.price}</div>
+            <div class="item-rating">${stars}</div>
         </div>
-        <button class="chef-ai-add-cart w-7 h-7 bg-orange-50 hover:bg-primary text-primary hover:text-white rounded-lg flex items-center justify-center transition-colors flex-shrink-0" data-id="${item.id}">
-            <i class="ri-add-line text-sm"></i>
+        <button class="add-cart-btn" data-id="${item.id}" aria-label="Add to cart">
+            <i class="ri-add-line"></i>
         </button>
     `;
     
-    card.querySelector('.chef-ai-add-cart').addEventListener('click', () => {
+    const addBtn = card.querySelector('.add-cart-btn');
+    addBtn.addEventListener('click', () => {
         addToCart(item);
+        addBtn.classList.add('added');
+        addBtn.innerHTML = '<i class="ri-check-line"></i>';
+        setTimeout(() => {
+            addBtn.classList.remove('added');
+            addBtn.innerHTML = '<i class="ri-add-line"></i>';
+        }, 1500);
     });
     
     container.appendChild(card);
@@ -925,13 +1100,16 @@ const showTypingIndicator = () => {
     const container = document.getElementById('chef-ai-messages');
     const indicator = document.createElement('div');
     indicator.id = 'chef-typing-indicator-bubble';
-    indicator.className = 'flex gap-2';
+    indicator.className = 'chef-typing-wrap';
     indicator.innerHTML = `
-        <div class="w-7 h-7 rounded-full bg-orange-100 dark:bg-orange-950/40 flex items-center justify-center text-xs flex-shrink-0">👨‍🍳</div>
+        <div class="msg-avatar">👨‍🍳</div>
         <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="typing-label">Chef is cooking up a response…</div>
         </div>
     `;
     container.appendChild(indicator);
@@ -944,7 +1122,7 @@ const hideTypingIndicator = () => {
 };
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
+const initAll = () => {
     updateCartBadge();
     setupMobileMenu();
     injectCartDrawer();
@@ -954,7 +1132,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initTableBooking();
     initScrollReveal();
     injectChefAI();
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+} else {
+    initAll();
+}
 
 // Export state for debugging
 window.tastyState = state;

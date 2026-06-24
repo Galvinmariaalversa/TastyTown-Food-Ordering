@@ -5,6 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TastyTown – online Food Ordering</title>
+    <meta name="description" content="Order premium meals online from Tasty Town. Fresh gourmet recipes prepared by elite local chefs and delivered hot in 30 minutes. Explore our menu!">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TastyTown – Premium Online Food Ordering">
+    <meta property="og:description" content="Order premium meals online from Tasty Town. Fresh gourmet recipes prepared by elite local chefs and delivered hot in 30 minutes.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
+    
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "TastyTown",
+      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80",
+      "url": "https://tastytown.netlify.app",
+      "telephone": "+1234567890",
+      "priceRange": "$$",
+      "menu": "https://tastytown.netlify.app/menu.html",
+      "servesCuisine": "Gourmet, Pizza, Burger, Indian Fusion",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Gourmet Blvd",
+        "addressLocality": "Manhattan",
+        "addressRegion": "NY",
+        "postalCode": "10001",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.7128,
+        "longitude": -74.0060
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "10:00",
+        "closes": "23:00"
+      }
+    }
+    </script>
 
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -12,6 +60,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
@@ -82,7 +134,7 @@
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="font-medium text-gray-600 hover:text-primary transition-colors">Home</a>
+                <a href="index.html" class="font-bold text-primary transition-colors">Home</a>
 
                 <!-- Dropdown -->
                 <div class="relative group">
@@ -139,48 +191,119 @@
                 </a>
 
                 <button id="mobile-menu-btn"
+                    aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="true"
                     class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors active:scale-95">
                     <i class="ri-menu-4-line text-2xl"></i>
                 </button>
             </div>
         </div>
+    </nav>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu"
-            class="md:hidden hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 z-50 origin-top">
-            <div class="p-4 flex flex-col gap-2">
-                <a href="index.html"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-orange-50 text-primary font-bold">
-                    <i class="ri-home-4-line"></i> Home
+    <!-- Premium Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 pointer-events-none hidden">
+        <!-- Backdrop with modern blur effect -->
+        <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-md opacity-0 transition-opacity duration-300 pointer-events-auto mobile-menu-backdrop"></div>
+        <!-- Drawer container sliding from right -->
+        <div class="absolute top-0 right-0 h-full w-[310px] bg-white shadow-2xl flex flex-col z-50 transform translate-x-full transition-transform duration-300 ease-out mobile-menu-drawer pointer-events-auto border-l border-gray-100">
+            <!-- Drawer Header -->
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="relative w-8 h-8 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-primary/10 rounded-lg"></div>
+                        <svg class="w-5.5 h-5.5 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21C16 16.5 19 13 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 13 8 16.5 12 21Z" fill="url(#mob-logo-grad)" stroke="#ea580c" stroke-width="1.2" />
+                            <defs>
+                                <linearGradient id="mob-logo-grad" x1="5" y1="2" x2="19" y2="21">
+                                    <stop stop-color="#f97316" />
+                                    <stop offset="1" stop-color="#ea580c" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <span class="font-heading font-extrabold text-lg text-gray-900">Tasty<span class="text-primary">Town</span></span>
                 </a>
+                <button id="mobile-menu-close-btn" aria-label="Close mobile menu" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-900 transition-colors">
+                    <i class="ri-close-line text-2xl"></i>
+                </button>
+            </div>
 
-                <div class="border-t border-b border-gray-50 py-2 my-1">
-                    <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Menu</p>
-                    <a href="menu.html"
-                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
-                        <i class="ri-restaurant-line"></i> All Items
+            <!-- Drawer Content (Scrollable) -->
+            <div class="flex-1 overflow-y-auto py-6 px-4 space-y-6">
+                <!-- User Greeting Card -->
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-2xl p-4 border border-orange-100/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">
+                            <i class="ri-user-smile-line text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-medium">Welcome to TastyTown</p>
+                            <p class="text-sm font-bold text-gray-900">Gourmet Delivery</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Bar in Menu -->
+                <div class="relative">
+                    <i class="ri-search-line absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search menu..." class="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-primary/20 mobile-drawer-search">
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="space-y-1">
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Navigation</p>
+                    <a href="index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl bg-orange-50 text-primary font-bold transition-all group">
+                        <i class="ri-home-4-line text-lg text-primary"></i> Home
                     </a>
-                    <a href="menu.html?cat=Pizza"
-                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
-                        <i class="ri-pie-chart-line"></i> Pizza
+                    <a href="menu.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-primary font-semibold transition-all group">
+                        <i class="ri-restaurant-line text-lg text-gray-400 group-hover:text-primary"></i> Browse Menu
                     </a>
-                    <a href="menu.html?cat=Burger"
-                        class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-primary hover:pl-6 transition-all">
-                        <i class="ri-bread-line"></i> Burger
+                    <a href="about.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-primary font-semibold transition-all group">
+                        <i class="ri-information-line text-lg text-gray-400 group-hover:text-primary"></i> About Us
+                    </a>
+                    <a href="contact.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-primary font-semibold transition-all group">
+                        <i class="ri-customer-service-2-line text-lg text-gray-400 group-hover:text-primary"></i> Contact Support
+                    </a>
+                    <a href="cart.html" class="flex items-center justify-between px-3 py-3 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-primary font-semibold transition-all group mobile-drawer-cart-link">
+                        <div class="flex items-center gap-3">
+                            <i class="ri-shopping-bag-3-line text-lg text-gray-400 group-hover:text-primary"></i> Cart
+                        </div>
+                        <span class="cart-count bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden shadow-sm">0</span>
                     </a>
                 </div>
 
-                <a href="about.html"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
-                    <i class="ri-information-line"></i> About Us
-                </a>
-                <a href="contact.html"
-                    class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium transition-colors">
-                    <i class="ri-customer-service-2-line"></i> Contact
-                </a>
+                <!-- Dynamic Menu Subcategories -->
+                <div class="pt-4 border-t border-gray-100">
+                    <p class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Popular Categories</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="menu.html?cat=Pizza" class="flex items-center gap-2 p-2.5 rounded-xl border border-gray-100 bg-gray-50/50 hover:border-primary/30 hover:bg-orange-50/30 text-xs font-semibold text-gray-700 hover:text-primary transition-all">
+                            <span>🍕</span> Pizza
+                        </a>
+                        <a href="menu.html?cat=Burger" class="flex items-center gap-2 p-2.5 rounded-xl border border-gray-100 bg-gray-50/50 hover:border-primary/30 hover:bg-orange-50/30 text-xs font-semibold text-gray-700 hover:text-primary transition-all">
+                            <span>🍔</span> Burger
+                        </a>
+                        <a href="menu.html?cat=Biryani" class="flex items-center gap-2 p-2.5 rounded-xl border border-gray-100 bg-gray-50/50 hover:border-primary/30 hover:bg-orange-50/30 text-xs font-semibold text-gray-700 hover:text-primary transition-all">
+                            <span>🍚</span> Biryani
+                        </a>
+                        <a href="menu.html?cat=Desserts" class="flex items-center gap-2 p-2.5 rounded-xl border border-gray-100 bg-gray-50/50 hover:border-primary/30 hover:bg-orange-50/30 text-xs font-semibold text-gray-700 hover:text-primary transition-all">
+                            <span>🍦</span> Desserts
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drawer Footer -->
+            <div class="p-6 border-t border-gray-100 bg-gray-50/50 space-y-4">
+                <button class="w-full bg-primary hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow-md hover:shadow-lg transition-all text-xs flex items-center justify-center gap-1.5 mobile-book-table-btn">
+                    <i class="ri-calendar-check-line text-sm"></i> Book a Table
+                </button>
+                <div class="flex justify-center gap-4 text-gray-400">
+                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
+                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
+                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
 
     <!-- Hero Section -->
     <section class="relative bg-white overflow-hidden border-b border-gray-150/40">
@@ -295,6 +418,7 @@
                     class="group bg-white rounded-2xl border border-gray-150 overflow-hidden hover:shadow-lg hover-lift transition-all duration-300">
                     <div class="h-44 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80"
+                            loading="lazy" decoding="async" alt="Order online"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white">
@@ -308,6 +432,7 @@
                     class="group bg-white rounded-2xl border border-gray-150 overflow-hidden hover:shadow-lg hover-lift transition-all duration-300">
                     <div class="h-44 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80"
+                            loading="lazy" decoding="async" alt="Book a table"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white">
@@ -321,6 +446,7 @@
                     class="group bg-white rounded-2xl border border-gray-150 overflow-hidden hover:shadow-lg hover-lift transition-all duration-300">
                     <div class="h-44 overflow-hidden relative">
                         <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=500&q=80"
+                            loading="lazy" decoding="async" alt="Drinks and nightlife"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white">
@@ -347,9 +473,10 @@
                     <div
                         class="w-20 h-20 mx-auto rounded-full bg-orange-50 mb-3 overflow-hidden group-hover:scale-110 transition-transform">
                         <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=150&q=60"
+                            loading="lazy" decoding="async" alt="Pizza Category"
                             class="w-full h-full object-cover">
                     </div>
-                    <h3 class="font-bold text-gray-800">Pizza</h3>
+                    <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">Pizza</h3>
                 </a>
                 <!-- Cat 2 -->
                 <a href="menu.html?cat=Burger"
@@ -357,9 +484,10 @@
                     <div
                         class="w-20 h-20 mx-auto rounded-full bg-orange-50 mb-3 overflow-hidden group-hover:scale-110 transition-transform">
                         <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=150&q=60"
+                            loading="lazy" decoding="async" alt="Burger Category"
                             class="w-full h-full object-cover">
                     </div>
-                    <h3 class="font-bold text-gray-800">Burger</h3>
+                    <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">Burger</h3>
                 </a>
                 <!-- Cat 3 -->
                 <a href="menu.html?cat=Biryani"
@@ -367,9 +495,10 @@
                     <div
                         class="w-20 h-20 mx-auto rounded-full bg-orange-50 mb-3 overflow-hidden group-hover:scale-110 transition-transform">
                         <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=150&q=60"
+                            loading="lazy" decoding="async" alt="Biryani Category"
                             class="w-full h-full object-cover">
                     </div>
-                    <h3 class="font-bold text-gray-800">Biryani</h3>
+                    <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">Biryani</h3>
                 </a>
                 <!-- Cat 4 -->
                 <a href="menu.html?cat=Desserts"
@@ -377,9 +506,10 @@
                     <div
                         class="w-20 h-20 mx-auto rounded-full bg-orange-50 mb-3 overflow-hidden group-hover:scale-110 transition-transform">
                         <img src="https://plus.unsplash.com/premium_photo-1667546202654-e7574a20872c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGVzc2VydCUyMGltYWdlfGVufDB8fDB8fHww"
+                            loading="lazy" decoding="async" alt="Desserts Category"
                             class="w-full h-full object-cover">
                     </div>
-                    <h3 class="font-bold text-gray-800">Desserts</h3>
+                    <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">Desserts</h3>
                 </a>
                 <!-- Cat 5 -->
                 <a href="menu.html?cat=Drinks"
@@ -387,9 +517,10 @@
                     <div
                         class="w-20 h-20 mx-auto rounded-full bg-orange-50 mb-3 overflow-hidden group-hover:scale-110 transition-transform">
                         <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=150&q=60"
+                            loading="lazy" decoding="async" alt="Drinks Category"
                             class="w-full h-full object-cover">
                     </div>
-                    <h3 class="font-bold text-gray-800">Drinks</h3>
+                    <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">Drinks</h3>
                 </a>
             </div>
         </div>
@@ -548,7 +679,43 @@
             </div>
 
             <div id="bestseller-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Populated by JS -->
+                <!-- Skeleton Loader Cards -->
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 flex flex-col h-full skeleton-card">
+                    <div class="rounded-xl h-40 bg-gray-200 mb-4 skeleton-pulse"></div>
+                    <div class="h-5 bg-gray-200 rounded w-3/4 mb-2 skeleton-pulse"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/2 mb-4 skeleton-pulse"></div>
+                    <div class="mt-auto flex items-center justify-between">
+                        <div class="h-6 bg-gray-200 rounded w-1/3 skeleton-pulse"></div>
+                        <div class="w-9 h-9 bg-gray-200 rounded-full skeleton-pulse"></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 flex flex-col h-full skeleton-card">
+                    <div class="rounded-xl h-40 bg-gray-200 mb-4 skeleton-pulse"></div>
+                    <div class="h-5 bg-gray-200 rounded w-3/4 mb-2 skeleton-pulse"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/2 mb-4 skeleton-pulse"></div>
+                    <div class="mt-auto flex items-center justify-between">
+                        <div class="h-6 bg-gray-200 rounded w-1/3 skeleton-pulse"></div>
+                        <div class="w-9 h-9 bg-gray-200 rounded-full skeleton-pulse"></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 flex flex-col h-full skeleton-card">
+                    <div class="rounded-xl h-40 bg-gray-200 mb-4 skeleton-pulse"></div>
+                    <div class="h-5 bg-gray-200 rounded w-3/4 mb-2 skeleton-pulse"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/2 mb-4 skeleton-pulse"></div>
+                    <div class="mt-auto flex items-center justify-between">
+                        <div class="h-6 bg-gray-200 rounded w-1/3 skeleton-pulse"></div>
+                        <div class="w-9 h-9 bg-gray-200 rounded-full skeleton-pulse"></div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-4 border border-gray-100 flex flex-col h-full skeleton-card">
+                    <div class="rounded-xl h-40 bg-gray-200 mb-4 skeleton-pulse"></div>
+                    <div class="h-5 bg-gray-200 rounded w-3/4 mb-2 skeleton-pulse"></div>
+                    <div class="h-4 bg-gray-200 rounded w-1/2 mb-4 skeleton-pulse"></div>
+                    <div class="mt-auto flex items-center justify-between">
+                        <div class="h-6 bg-gray-200 rounded w-1/3 skeleton-pulse"></div>
+                        <div class="w-9 h-9 bg-gray-200 rounded-full skeleton-pulse"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -643,6 +810,7 @@
                 </div>
                 <div class="z-10 relative">
                     <img src="https://images.unsplash.com/photo-1617347454431-f49d7ff5c3b1?auto=format&fit=crop&w=400&q=80"
+                        loading="lazy" decoding="async" alt="App Promo Mockup"
                         class="w-64 md:w-80 rounded-2xl shadow-2xl border-4 border-white transform md:rotate-3">
                 </div>
                 <!-- bg decorations -->
@@ -746,7 +914,7 @@
         bestsellerGrid.innerHTML = bestSellers.map(item => `
             <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover-lift transition-all group relative cursor-pointer product-card" data-id="${item.id}">
                 <div class="relative rounded-xl overflow-hidden h-40 mb-4 bg-gray-100">
-                     <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                      <img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                      <button class="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md text-gray-400 hover:text-red-500 transition-colors">
                         <i class="ri-heart-fill"></i>
                      </button>
@@ -755,7 +923,7 @@
                      </span>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <h3 class="font-bold text-gray-900 line-clamp-1">${item.name}</h3>
+                    <h3 class="font-bold text-gray-900 line-clamp-1 group-hover:text-primary transition-colors">${item.name}</h3>
                     <p class="text-sm text-gray-500">${item.category}</p>
                     <div class="flex items-center justify-between mt-3">
                         <span class="font-bold text-lg text-primary">${formatCurrency(item.price)}</span>
