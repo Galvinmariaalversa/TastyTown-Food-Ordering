@@ -42,6 +42,21 @@
             }
         }
     </script>
+    <!-- AboutPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About TastyTown",
+      "description": "Discover the story of Tasty Town, our journey since 2015, and our Michelin-starred chef team.",
+      "url": "https://tastytown.netlify.app/about.html",
+      "mainEntity": {
+        "@type": "Restaurant",
+        "name": "TastyTown",
+        "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?fm=webp&fit=crop&w=1500&q=60"
+      }
+    }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
@@ -163,7 +178,7 @@
                         </div>
                         <span class="font-heading font-extrabold text-lg text-gray-900">Tasty<span class="text-primary">Town</span></span>
                     </a>
-                    <button id="mobile-menu-close-btn" aria-label="Close mobile menu" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-900 transition-colors">
+                    <button id="mobile-menu-close-btn" aria-label="Close mobile menu" class="w-11 h-11 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-900 transition-colors">
                         <i class="ri-close-line text-2xl"></i>
                     </button>
                 </div>
@@ -254,7 +269,7 @@
                 high-quality, and delicious food straight to your doorstep.</p>
         </div>
         <div
-            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1500&q=60')] bg-cover bg-center opacity-20">
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?fm=webp&fit=crop&w=1500&q=60')] bg-cover bg-center opacity-20">
         </div>
     </header>
 
@@ -263,7 +278,7 @@
         <!-- Story / Promise -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
-                <img src="./images/about_kitchen_story.png"
+                <img src="./images/about_kitchen_story.webp"
                     loading="lazy" decoding="async"
                     class="rounded-3xl shadow-2xl rotate-2 hover:rotate-0 transition-all duration-500 w-full object-cover" alt="Our kitchen story">
             </div>
@@ -434,7 +449,7 @@
                 <!-- Chef 1 -->
                 <div class="scroll-reveal bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
                     <div class="relative h-80 overflow-hidden">
-                        <img src="./images/chef_alessandro.png" alt="Chef Alessandro Silva" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="./images/chef_alessandro.webp" alt="Chef Alessandro Silva" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                         <div class="absolute bottom-6 left-6 text-white">
                             <span class="text-xs uppercase tracking-widest text-primary font-bold">Executive Chef</span>
@@ -456,7 +471,7 @@
                 <!-- Chef 2 -->
                 <div class="scroll-reveal bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
                     <div class="relative h-80 overflow-hidden">
-                        <img src="./images/chef_mei_lin.png" alt="Chef Mei Lin" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="./images/chef_mei_lin.webp" alt="Chef Mei Lin" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                         <div class="absolute bottom-6 left-6 text-white">
                             <span class="text-xs uppercase tracking-widest text-primary font-bold">Wok & Fusion Specialist</span>
@@ -478,7 +493,7 @@
                 <!-- Chef 3 -->
                 <div class="scroll-reveal bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
                     <div class="relative h-80 overflow-hidden">
-                        <img src="./images/chef_sophia.png" alt="Chef Sophia Dubois" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="./images/chef_sophia.webp" alt="Chef Sophia Dubois" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
                         <div class="absolute bottom-6 left-6 text-white">
                             <span class="text-xs uppercase tracking-widest text-primary font-bold">Master Pâtissier</span>

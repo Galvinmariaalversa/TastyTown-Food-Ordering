@@ -12,33 +12,7 @@
     <meta property="og:description" content="Customize and order your favorite dish online at Tasty Town. Fresh ingredients, reviews, and fast local delivery.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
     
-    <!-- Product Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Gourmet Dish",
-      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80",
-      "description": "Premium gourmet dish prepared fresh to order by certified culinary experts at TastyTown.",
-      "brand": {
-        "@type": "Brand",
-        "name": "TastyTown"
-      },
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "INR",
-        "price": "299",
-        "itemCondition": "https://schema.org/NewCondition",
-        "availability": "https://schema.org/InStock",
-        "url": "https://tastytown.netlify.app/product.html"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "240"
-      }
-    }
-    </script>
+    <!-- Product Schema is dynamically injected via JavaScript below -->
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- Fonts -->
@@ -192,7 +166,7 @@
                         </div>
                         <span class="font-heading font-extrabold text-lg text-gray-900">Tasty<span class="text-primary">Town</span></span>
                     </a>
-                    <button id="mobile-menu-close-btn" aria-label="Close mobile menu" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-900 transition-colors">
+                    <button id="mobile-menu-close-btn" aria-label="Close mobile menu" class="w-11 h-11 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-900 transition-colors">
                         <i class="ri-close-line text-2xl"></i>
                     </button>
                 </div>
@@ -593,12 +567,47 @@
         let quantity = 1;
         let selectedAddOns = [];
 
-        // Init UI
+        // Init UI & Title
+        document.title = `${product.name} - TastyTown`;
         imgEl.src = product.image;
         nameEl.textContent = product.name;
         priceEl.textContent = formatCurrency(product.price);
         ratingEl.textContent = product.rating;
         descEl.textContent = product.description;
+        
+        // Dynamically inject JSON-LD Product Schema
+        try {
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": product.name,
+                "image": product.image,
+                "description": product.description,
+                "brand": {
+                    "@type": "Brand",
+                    "name": "TastyTown"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "priceCurrency": "INR",
+                    "price": product.price.toString(),
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "availability": "https://schema.org/InStock",
+                    "url": window.location.href
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": product.rating.toString(),
+                    "reviewCount": product.reviewCount ? product.reviewCount.toString() : "150"
+                }
+            };
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.text = JSON.stringify(schema);
+            document.head.appendChild(script);
+        } catch (err) {
+            console.error("Failed to inject Product schema:", err);
+        }
 
         const updatePrice = () => {
             const basePrice = product.price;
