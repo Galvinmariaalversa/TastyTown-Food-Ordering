@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - TastyTown</title>
+    <title>Secure Checkout - TastyTown</title>
     <meta name="description" content="Securely place your order on Tasty Town. Enter your delivery address, select delivery speed, and choose your payment method.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://tastytown.netlify.app/checkout.html">
+    <meta name="theme-color" content="#f97316">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Secure Checkout – TastyTown">
@@ -353,6 +356,9 @@
         setupMobileMenu();
         renderOrderItems();
     </script>
+
+    <!-- Performance & UX Enhancement Module -->
+    <script type="module" src="./js/performance.js"></script>
 </body>
 
 </html>

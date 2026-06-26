@@ -4,13 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu - TastyTown</title>
+    <title>Full Menu - TastyTown | Pizzas, Burgers, Biryani & More</title>
     <meta name="description" content="Browse our full gourmet menu at Tasty Town. Filter from pizzas, burgers, biryanis, desserts, and fresh drinks. Fast delivery in Manhattan.">
+    <link rel="canonical" href="https://tastytown.netlify.app/menu.html">
+    <meta name="theme-color" content="#f97316">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tastytown.netlify.app/menu.html">
+    <meta property="og:site_name" content="TastyTown">
     <meta property="og:title" content="TastyTown Gourmet Menu – Pizzas, Burgers & More">
     <meta property="og:description" content="Browse our full gourmet menu at Tasty Town. Filter from pizzas, burgers, biryanis, desserts, and fresh drinks.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1513104890138-7c749659a591?fm=webp&fit=crop&w=1200&h=630&q=80">
+    <meta property="og:locale" content="en_US">
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TastyTown Gourmet Menu – Pizzas, Burgers & More">
+    <meta name="twitter:description" content="Browse our full gourmet menu at Tasty Town. Fresh pizzas, burgers, biryanis, desserts and drinks.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1513104890138-7c749659a591?fm=webp&fit=crop&w=1200&h=630&q=80">
     
     <!-- Menu Schema -->
     <script type="application/ld+json">
@@ -32,8 +42,20 @@
       }
     }
     </script>
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tastytown.netlify.app/" },
+        { "@type": "ListItem", "position": 2, "name": "Menu", "item": "https://tastytown.netlify.app/menu.html" }
+      ]
+    }
+    </script>
+    <!-- Icons (non-blocking) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -663,6 +685,9 @@
         // Mobile Menu fix for sticking
         const mobMenu = document.getElementById('mobile-menu');
     </script>
+
+    <!-- Performance & UX Enhancement Module -->
+    <script type="module" src="./js/performance.js"></script>
 </body>
 
 </html>

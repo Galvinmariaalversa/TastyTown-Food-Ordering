@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /checkout.html
 Disallow: /success.html
+Disallow: /track.html
+Disallow: /cart.html
 
 Sitemap: https://tastytown.netlify.app/sitemap.xml

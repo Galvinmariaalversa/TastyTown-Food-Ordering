@@ -4,14 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TastyTown – online Food Ordering</title>
+    <title>TastyTown – Premium Online Food Ordering</title>
     <meta name="description" content="Order premium meals online from Tasty Town. Fresh gourmet recipes prepared by elite local chefs and delivered hot in 30 minutes. Explore our menu!">
+    <link rel="canonical" href="https://tastytown.netlify.app/">
+    <meta name="theme-color" content="#f97316">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tastytown.netlify.app/">
+    <meta property="og:site_name" content="TastyTown">
     <meta property="og:title" content="TastyTown – Premium Online Food Ordering">
     <meta property="og:description" content="Order premium meals online from Tasty Town. Fresh gourmet recipes prepared by elite local chefs and delivered hot in 30 minutes.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
-    
+    <meta property="og:locale" content="en_US">
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TastyTown – Premium Online Food Ordering">
+    <meta name="twitter:description" content="Order premium meals online from Tasty Town. Fresh gourmet recipes prepared by elite local chefs and delivered hot in 30 minutes.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
     <!-- LocalBusiness Schema -->
     <script type="application/ld+json">
     {
@@ -54,8 +63,11 @@
     }
     </script>
 
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Preload LCP hero image for faster Largest Contentful Paint -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80" fetchpriority="high">
+    <!-- Icons (non-blocking load) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -346,9 +358,9 @@
                 <div class="mt-10 pt-8 border-t border-gray-100 flex items-center gap-8 text-sm text-gray-500 w-full">
                     <div class="flex items-center gap-2.5">
                         <div class="flex -space-x-2">
-                            <img class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?fm=webp&fit=crop&w=100&h=100&q=80" alt="User image">
-                            <img class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fm=webp&fit=crop&w=100&h=100&q=80" alt="User image">
-                            <img class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=webp&fit=crop&w=100&h=100&q=80" alt="User image">
+                            <img class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?fm=webp&fit=crop&w=100&h=100&q=80" alt="Happy TastyTown customer" width="32" height="32" loading="lazy" decoding="async">
+                            <img class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fm=webp&fit=crop&w=100&h=100&q=80" alt="Happy TastyTown customer" width="32" height="32" loading="lazy" decoding="async">
+                            <img class="w-8 h-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=webp&fit=crop&w=100&h=100&q=80" alt="Happy TastyTown customer" width="32" height="32" loading="lazy" decoding="async">
                         </div>
                         <div>
                             <p class="font-bold text-gray-900 leading-none">15k+</p>
@@ -375,7 +387,10 @@
                     <!-- Image Card Container -->
                     <div class="relative overflow-hidden rounded-[2.2rem] shadow-[0_25px_60px_rgba(249,115,22,0.16)] border-4 border-white z-10">
                         <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80"
-                            alt="Delicious Food Platter"
+                            alt="Delicious gourmet food platter with fresh ingredients from TastyTown"
+                            width="800" height="430"
+                            fetchpriority="high"
+                            decoding="async"
                             class="w-full object-cover h-[430px] transform scale-102 hover:scale-106 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"></div>
                     </div>
@@ -460,13 +475,13 @@
     </section>
 
     <!-- Categories -->
-    <section class="py-12 bg-gray-50 border-b border-gray-100">
+    <section class="py-12 bg-gray-50 border-b border-gray-100 scroll-reveal">
         <div class="container mx-auto px-4 md:px-6">
             <h2 class="font-heading text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
                 Popular Categories <span class="text-primary text-4xl">.</span>
             </h2>
 
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 stagger-children">
                 <!-- Cat 1 -->
                 <a href="menu.html?cat=Pizza"
                     class="group bg-white p-6 rounded-2xl shadow-sm hover-lift text-center border border-gray-100 cursor-pointer">
@@ -846,15 +861,15 @@
                         The best online food ordering service in town. Fresh, fast, and delicious.
                     </p>
                     <div class="mt-6 flex gap-3">
-                        <a href="#"
+                        <a href="#" aria-label="Follow TastyTown on Facebook"
                             class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 hover:text-orange-500 transition-colors"><i
-                                class="ri-facebook-fill"></i></a>
-                        <a href="#"
+                                class="ri-facebook-fill" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Follow TastyTown on Twitter"
                             class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 hover:text-orange-500 transition-colors"><i
-                                class="ri-twitter-fill"></i></a>
-                        <a href="#"
+                                class="ri-twitter-fill" aria-hidden="true"></i></a>
+                        <a href="#" aria-label="Follow TastyTown on Instagram"
                             class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 hover:text-orange-500 transition-colors"><i
-                                class="ri-instagram-fill"></i></a>
+                                class="ri-instagram-fill" aria-hidden="true"></i></a>
                     </div>
                 </div>
 
@@ -883,10 +898,12 @@
                     <p class="text-gray-500 text-sm mb-4">Subscribe to our newsletter for coupons and updates.</p>
                     <div class="flex">
                         <input type="email" placeholder="Email Address"
+                            aria-label="Subscribe to TastyTown newsletter"
                             class="bg-gray-100 px-4 py-2 rounded-l-lg outline-none text-sm w-full">
                         <button
+                            aria-label="Subscribe to newsletter"
                             class="bg-primary text-white px-4 py-2 rounded-r-lg hover:bg-orange-600 transition-colors"><i
-                                class="ri-send-plane-fill"></i></button>
+                                class="ri-send-plane-fill" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
@@ -958,28 +975,45 @@
             }
         });
 
-        // --- Interactive 3D Hero Platter Tilt ---
+        // --- Interactive 3D Perspective Hero Image Container (RAF-throttled) ---
         const heroCard = document.getElementById('hero-tilt-card');
         if (heroCard) {
             const cardParent = heroCard.parentElement;
+            let tiltRafId = null;
+            let latestMouseX = 0, latestMouseY = 0;
+
             cardParent.addEventListener('mousemove', (e) => {
-                const rect = cardParent.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const xc = rect.width / 2;
-                const yc = rect.height / 2;
-                const dx = x - xc;
-                const dy = y - yc;
-                
-                const tiltX = -(dy / yc) * 10;
-                const tiltY = (dx / xc) * 10;
-                
-                heroCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-            
+                latestMouseX = e.clientX;
+                latestMouseY = e.clientY;
+
+                if (tiltRafId) return; // Already have a frame queued
+
+                tiltRafId = requestAnimationFrame(() => {
+                    tiltRafId = null;
+                    const rect = cardParent.getBoundingClientRect();
+                    const x = latestMouseX - rect.left;
+                    const y = latestMouseY - rect.top;
+                    const xc = rect.width / 2;
+                    const yc = rect.height / 2;
+                    const dx = x - xc;
+                    const dy = y - yc;
+
+                    const tiltX = -(dy / yc) * 8; // Reduced from 10 for subtlety
+                    const tiltY = (dx / xc) * 8;
+
+                    heroCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+            }, { passive: true });
+
             cardParent.addEventListener('mouseleave', () => {
+                if (tiltRafId) {
+                    cancelAnimationFrame(tiltRafId);
+                    tiltRafId = null;
+                }
+                heroCard.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 heroCard.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-            });
+                setTimeout(() => { heroCard.style.transition = ''; }, 500);
+            }, { passive: true });
         }
 
         // --- Web Audio API Sounds Synthesizer ---
@@ -1212,6 +1246,9 @@
         });
 
     </script>
+
+    <!-- Performance & UX Enhancement Module -->
+    <script type="module" src="./js/performance.js"></script>
 </body>
 
 </html>

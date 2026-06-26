@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tastytown.netlify.app/index.html</loc>
+    <loc>https://tastytown.netlify.app/</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
     <loc>https://tastytown.netlify.app/menu.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://tastytown.netlify.app/product.html</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://tastytown.netlify.app/cart.html</loc>
-    <priority>0.70</priority>
-  </url>
-  <url>
     <loc>https://tastytown.netlify.app/about.html</loc>
-    <priority>0.50</priority>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
   </url>
   <url>
     <loc>https://tastytown.netlify.app/contact.html</loc>
-    <priority>0.50</priority>
-  </url>
-  <url>
-    <loc>https://tastytown.netlify.app/track.html</loc>
-    <priority>0.50</priority>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
   </url>
 </urlset>

@@ -1407,3 +1407,662 @@ textarea::placeholder {
     background-color: rgba(249, 115, 22, 0.05) !important;
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.05);
 }
+
+/* ============================================================
+   PERFORMANCE & SMOOTH UX ENHANCEMENTS
+   All additions below — zero existing rules modified
+   ============================================================ */
+
+/* 1. Buttery Smooth Scrolling — native CSS approach
+   Works on Chrome, Edge, Firefox. Safari uses momentum by default. */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    /* Prevent horizontal scroll without blocking vertical on Safari */
+    overflow-x: hidden;
+}
+
+/* 2. GPU-accelerate the sticky navbar for jank-free hide/show
+   The performance.js module applies transform; will-change prepares the layer */
+nav.sticky {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* Ensure the nav composite layer doesn't cause repaints below it */
+    isolation: isolate;
+}
+
+/* 3. Lazy Image Smooth Fade-In
+   Images start transparent, JS adds .img-loaded after decode completes */
+img.img-lazy-pending {
+    opacity: 0;
+    transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+img.img-loaded {
+    opacity: 1;
+}
+
+/* Prevent CLS: block-level images always fill their container */
+img {
+    display: block;
+}
+
+/* 4. Stagger Children Reveal
+   Parent gets .stagger-children class; children animate in with delays set by JS */
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+        opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stagger-children.active > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 5. Scroll Reveal — upgrade existing class with smoother cubic-bezier */
+.scroll-reveal {
+    /* Override the existing declaration for smoother feel */
+    transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* 6. Refined Hover-Lift — remove overshoot bounce, keep translateY and shadow */
+.hover-lift {
+    transition:
+        transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* 7. Touch Momentum Scrolling for all overflow containers */
+.overflow-y-auto,
+.overflow-x-auto,
+.no-scrollbar {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 8. Body Scroll-Lock Width Compensation
+   Prevents 15px layout shift when overflow:hidden is applied (modal/menu open) */
+body.modal-open,
+body.menu-open {
+    padding-right: var(--scrollbar-width, 0px) !important;
+}
+
+/* 9. Prevent White Flash Between Page Navigations */
+html,
+body {
+    /* Force GPU composited layer on root */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* 10. GPU Acceleration for Frequently Animated Elements */
+.animate-float,
+.animate-float-delayed,
+.animate-float-drift-1,
+.animate-float-drift-2,
+.chef-ai-fab,
+.chef-ai-chatbox,
+.roulette-wheel,
+.led-bulb {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* 11. Reduced Motion — universal override
+   Respects user's OS preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .scroll-reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .stagger-children > * {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    img.img-lazy-pending {
+        opacity: 1 !important;
+        transition: none !important;
+    }
+
+    nav.sticky {
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* 12. Premium Focus Ring for Keyboard Navigation
+   Shows only on keyboard focus (managed by performance.js) */
+[data-keyboard-focus="true"]:focus-visible,
+[data-keyboard-focus="true"]:focus {
+    outline: 2.5px solid #f97316 !important;
+    outline-offset: 3px !important;
+    border-radius: 4px;
+}
+
+/* 13. Overscroll Containment — only on drawer/modal scroll containers,
+   NOT on page sections (would trap scroll and make page hard to scroll) */
+.overflow-y-auto {
+    overscroll-behavior: contain;
+}
+
+/* 14. Smooth card transitions — upgrade existing card interactions
+   Using transform-only properties (no layout-triggering) */
+.product-card,
+.group.bg-white.rounded-2xl {
+    transform: translateZ(0); /* Force composite layer */
+}
+
+/* 16. Smooth underline effect for nav links */
+nav a:not([class*="bg-"]) {
+    position: relative;
+}
+
+nav a:not([class*="bg-"])::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #f97316;
+    border-radius: 1px;
+    transition: width 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+nav a:not([class*="bg-"]):hover::after,
+nav a.font-bold.text-primary::after {
+    width: 100%;
+}
+
+/* 17. Premium image container — prevent layout shift and enable smooth zoom */
+.overflow-hidden img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* 18. Skeleton shimmer for dynamically loaded content */
+.skeleton-item {
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+    border-radius: 0.75rem;
+}
+
+.skeleton-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.7) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+/* 19. Glassmorphism nav — ensure no jank from backdrop-filter on scroll */
+.glass-nav {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* 20. Mobile: Larger touch targets for better tap accuracy */
+@media (max-width: 768px) {
+    nav a,
+    nav button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .add-btn,
+    .filter-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* ============================================================
+   COMPREHENSIVE MOBILE RESPONSIVE IMPROVEMENTS
+   All pages — via pure CSS, zero HTML changes
+   ============================================================ */
+
+/* ── GLOBAL BASE ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Tighten container padding on small screens */
+    .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Page headers — reduce oversized hero banner fonts */
+    header h1.font-heading {
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
+    }
+
+    header p {
+        font-size: 0.875rem !important;
+    }
+
+    /* Reduce excessive vertical padding on sections */
+    section.py-20 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+    section.py-16 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+    section.py-12 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+}
+
+/* ── INDEX: HERO SECTION ─────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Hero grid — reduce massive gap on stacked layout */
+    .container .grid.grid-cols-1.md\\:grid-cols-2.gap-16 {
+        gap: 2.5rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    /* Hero H1 — scale down from text-4xl */
+    h1.font-heading.text-4xl.md\\:text-6xl {
+        font-size: 2.25rem !important;
+        line-height: 1.15 !important;
+    }
+
+    /* Hero image — reduce fixed height on mobile */
+    .h-\\[430px\\] {
+        height: 260px !important;
+    }
+
+    /* Hero floating badges — prevent overflow off-screen */
+    div.absolute.-bottom-6.left-2.sm\\:-left-6 {
+        left: 0.5rem !important;
+        bottom: -0.5rem !important;
+        padding: 0.625rem !important;
+        gap: 0.5rem !important;
+    }
+
+    div.absolute.-top-6.right-2.sm\\:-right-6 {
+        right: 0.5rem !important;
+        top: -0.5rem !important;
+        padding: 0.625rem !important;
+        gap: 0.5rem !important;
+    }
+
+    div.absolute.top-1\/2.left-2.sm\\:-left-12 {
+        display: none !important; /* Hide 3rd badge on very narrow screens */
+    }
+
+    /* Trust stats row — stack vertically on very small screens */
+    .mt-10.pt-8.border-t {
+        flex-wrap: wrap !important;
+        gap: 1rem !important;
+    }
+
+    /* CTA buttons — full-width on mobile */
+    .mt-8.flex.flex-wrap.gap-4 a {
+        flex: 1 1 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+}
+
+/* ── INDEX: FEATURE WIDGET CARDS ─────────────────────────── */
+@media (max-width: 768px) {
+
+    /* 3-widget grid — 1 col on mobile */
+    section.py-12.bg-white .grid.grid-cols-1.md\\:grid-cols-3 {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    /* Feature widget image height */
+    section.py-12.bg-white .h-44 {
+        height: 160px !important;
+    }
+}
+
+/* ── INDEX: CATEGORIES ───────────────────────────────────── */
+@media (max-width: 480px) {
+
+    /* Category cards — compact padding on very small screens */
+    .grid-cols-2 > a.group.bg-white.p-6.rounded-2xl {
+        padding: 1rem !important;
+    }
+
+    /* Category icon circles */
+    .grid-cols-2 > a .w-20.h-20 {
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+    }
+}
+
+/* ── INDEX: ROULETTE SECTION ─────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Roulette container — scale down the wheel */
+    .roulette-container {
+        transform: scale(0.78) !important;
+        transform-origin: center center !important;
+        margin: -2.5rem 0 !important; /* Compensate for scaled empty space */
+    }
+
+    /* Roulette section grid gap */
+    #dish-roulette-sec .grid.grid-cols-1.lg\\:grid-cols-2 {
+        gap: 1rem !important;
+        padding: 1.5rem !important;
+    }
+}
+
+/* ── INDEX: BEST SELLERS / BESTSELLER SECTION ────────────── */
+@media (max-width: 768px) {
+
+    /* Menu grid on home page — already 1 or 2 cols, tighten gap */
+    #bestseller-grid,
+    #bestseller-container {
+        gap: 0.875rem !important;
+    }
+}
+
+/* ── INDEX: TODAY'S OFFERS ───────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Offer cards — reduce padding */
+    .bg-gradient-to-r.from-orange-500.to-red-500.rounded-2xl,
+    .bg-gradient-to-r.from-blue-800.to-indigo-900.rounded-2xl {
+        padding: 1.5rem !important;
+    }
+
+    .bg-gradient-to-r.from-orange-500 h3,
+    .bg-gradient-to-r.from-blue-800 h3 {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* ── INDEX: HOW IT WORKS + DELIVERY PROMISE ─────────────── */
+@media (max-width: 768px) {
+
+    /* Delivery promise — compact on mobile */
+    .bg-gray-900.rounded-3xl.p-8.md\\:p-12 {
+        padding: 1.5rem !important;
+        text-align: center !important;
+    }
+
+    /* Stats row in delivery promise */
+    .flex.gap-8 {
+        gap: 1.5rem !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+    }
+
+    /* Promise image — scale down on mobile */
+    .w-64.md\\:w-80.rounded-2xl {
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 0 auto !important;
+        transform: none !important; /* Remove desktop rotate-3 */
+    }
+}
+
+/* ── ABOUT PAGE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Story grid — stack, reduce gap */
+    .container .grid.grid-cols-1.md\\:grid-cols-2.gap-12 {
+        gap: 2rem !important;
+    }
+
+    /* Story image — remove rotate on mobile (awkward clipping) */
+    .rounded-3xl.shadow-2xl.rotate-2 {
+        transform: none !important;
+    }
+
+    /* Stats counter grid — 2×2 instead of 4-in-a-row */
+    .grid.grid-cols-2.lg\\:grid-cols-4.gap-8 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+
+    /* Remove horizontal dividers that break on 2-col layout */
+    .grid.grid-cols-2.lg\\:grid-cols-4 .lg\\:divide-x {
+        border-left: none !important;
+        padding-left: 0 !important;
+    }
+
+    /* Stats numbers — slightly smaller on mobile */
+    .font-heading.text-4xl.md\\:text-5xl {
+        font-size: 2rem !important;
+    }
+
+    /* Timeline — ensure left-aligned on mobile is readable */
+    .relative.max-w-4xl .space-y-12 {
+        padding-left: 1rem !important;
+    }
+
+    /* Timeline items content padding */
+    .w-full.md\\:w-1\\/2.pl-12.md\\:pl-0 {
+        padding-left: 3rem !important; /* More breathing room from the dot */
+    }
+
+    .w-full.md\\:w-1\\/2.pl-12.md\\:pl-12 {
+        padding-left: 3rem !important;
+    }
+
+    /* Chef team grid — already handles mobile but tighten gap */
+    .grid.grid-cols-1.md\\:grid-cols-3.gap-8 {
+        gap: 1.25rem !important;
+    }
+}
+
+/* ── CONTACT PAGE ────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Contact info cards — tighten padding */
+    .bg-white.p-8.rounded-3xl.border {
+        padding: 1.25rem !important;
+    }
+
+    /* Contact form + map side-by-side → stack */
+    .grid.grid-cols-1.lg\\:grid-cols-2.gap-12 {
+        gap: 1.5rem !important;
+    }
+
+    /* FAQ section spacing */
+    .space-y-4 > div {
+        padding: 1rem !important;
+    }
+}
+
+/* ── MENU PAGE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Filter bar — allow horizontal scroll on mobile */
+    .flex.flex-wrap.gap-2.mb-6,
+    .flex.flex-wrap.gap-3 {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        padding-bottom: 0.5rem !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+
+    .flex.flex-wrap.gap-2.mb-6::-webkit-scrollbar,
+    .flex.flex-wrap.gap-3::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    /* Menu grid — 2 cols on mobile */
+    #menu-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.875rem !important;
+    }
+
+    /* Menu cards — tighter padding on mobile */
+    #menu-grid .product-card {
+        padding: 0.75rem !important;
+    }
+}
+
+@media (max-width: 400px) {
+    /* Very small phones — 1 col menu grid */
+    #menu-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ── PRODUCT PAGE ────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Product detail layout — already stacks, fix image height */
+    .rounded-3xl.overflow-hidden.shadow-xl.bg-white.aspect-square {
+        aspect-ratio: 4 / 3 !important;
+    }
+
+    /* Product title */
+    #product-name {
+        font-size: 1.75rem !important;
+    }
+
+    /* Addons customizer — full width labels */
+    .space-y-2 > label {
+        align-items: flex-start !important;
+    }
+
+    /* Quantity + add to cart row — stack on very small screens */
+    .flex.items-center.gap-4.mt-8 {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+
+    .flex.items-center.gap-4.mt-8 > button,
+    .flex.items-center.gap-4.mt-8 > div {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* ── CART PAGE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Cart layout: items + summary stack naturally, tighten gap */
+    .grid.grid-cols-1.lg\\:grid-cols-3.gap-8 {
+        gap: 1.25rem !important;
+    }
+
+    /* Cart item row — handle long text gracefully */
+    .cart-item-row {
+        flex-wrap: wrap !important;
+        gap: 0.75rem !important;
+    }
+
+    /* Coupon input row */
+    .flex.gap-3 > input[type="text"] {
+        min-width: 0 !important;
+        flex: 1 !important;
+    }
+}
+
+/* ── CHECKOUT PAGE ───────────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Checkout grid — stack */
+    .grid.grid-cols-1.lg\\:grid-cols-2 {
+        gap: 1.25rem !important;
+    }
+
+    /* Payment method cards — 1 col on mobile */
+    .grid.grid-cols-3.gap-4 {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+    }
+}
+
+/* ── FOOTER — ALL PAGES ──────────────────────────────────── */
+@media (max-width: 768px) {
+
+    /* Footer grid — 2×2 instead of 4-across */
+    footer .grid.grid-cols-2.md\\:grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2rem !important;
+    }
+
+    /* Footer brand block — center on mobile */
+    footer .grid > div:first-child {
+        grid-column: 1 / -1 !important; /* Full width for brand */
+    }
+
+    /* Footer bottom bar — stack on mobile */
+    footer .flex.flex-col.md\\:flex-row {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 0.75rem !important;
+    }
+
+    footer .border-t.pt-8 {
+        padding-top: 1.5rem !important;
+    }
+}
+
+/* ── VERY SMALL SCREENS (≤ 380px) ───────────────────────── */
+@media (max-width: 380px) {
+
+    /* Hero h1 — tightest size */
+    h1.font-heading.text-4xl.md\\:text-6xl {
+        font-size: 1.875rem !important;
+    }
+
+    /* Hero stat badges */
+    .mt-10.pt-8.border-t > div {
+        font-size: 0.75rem !important;
+    }
+
+    /* Category card image circles — smallest screens */
+    .grid-cols-2 > a .w-20.h-20 {
+        width: 3rem !important;
+        height: 3rem !important;
+    }
+
+    /* Roulette section */
+    #dish-roulette-sec .grid.grid-cols-1 {
+        padding: 1rem !important;
+    }
+
+    /* Stat numbers on about page */
+    .font-heading.text-4xl.md\\:text-5xl {
+        font-size: 1.75rem !important;
+    }
+}
+
+/* ── SAFE WORD-BREAK FOR ALL PAGES ──────────────────────── */
+@media (max-width: 768px) {
+    h1, h2, h3 {
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+    }
+
+    /* Prevent images from causing horizontal overflow */
+    img {
+        max-width: 100% !important;
+    }
+}
+
