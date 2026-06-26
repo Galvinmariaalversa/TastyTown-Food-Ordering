@@ -32,6 +32,9 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
 // ─────────────────────────────────────────────
 // 3. Scroll-Reveal via IntersectionObserver
 // ─────────────────────────────────────────────
+let revealObserver = null;
+let staggerObserver = null;
+
 function initScrollReveal() {
     if (prefersReducedMotion) {
         // Immediately reveal everything if user prefers reduced motion
@@ -40,7 +43,7 @@ function initScrollReveal() {
         return;
     }
 
-    const revealObserver = new IntersectionObserver((entries, observer) => {
+    revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
@@ -48,8 +51,8 @@ function initScrollReveal() {
             }
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.05,
+        rootMargin: '0px 0px -30px 0px'
     });
 
     document.querySelectorAll('.scroll-reveal').forEach(el => {
@@ -57,7 +60,7 @@ function initScrollReveal() {
     });
 
     // Stagger children observer
-    const staggerObserver = new IntersectionObserver((entries, observer) => {
+    staggerObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
@@ -72,8 +75,8 @@ function initScrollReveal() {
             }
         });
     }, {
-        threshold: 0.08,
-        rootMargin: '0px 0px -40px 0px'
+        threshold: 0.05,
+        rootMargin: '0px 0px -30px 0px'
     });
 
     document.querySelectorAll('.stagger-children').forEach(el => {
@@ -82,50 +85,72 @@ function initScrollReveal() {
 }
 
 // ─────────────────────────────────────────────
-// 4. Lazy Image Smooth Fade-In
+// 4. Lazy Image Smooth Fade-In & MutationObserver
 // ─────────────────────────────────────────────
-function initImageFadeIn() {
-    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+function setupImageFadeIn(img) {
+    if (img.classList.contains('img-loaded') || img.classList.contains('img-lazy-pending')) return;
 
-    const handleLoad = (img) => {
+    const handleLoad = () => {
         img.classList.remove('img-lazy-pending');
         img.classList.add('img-loaded');
     };
 
-    lazyImages.forEach(img => {
-        if (img.complete && img.naturalWidth > 0) {
-            // Already loaded
-            img.classList.add('img-loaded');
-        } else {
-            img.classList.add('img-lazy-pending');
-            img.addEventListener('load', () => handleLoad(img), { once: true });
-            img.addEventListener('error', () => handleLoad(img), { once: true }); // Graceful on error
-        }
-    });
+    if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('img-loaded');
+    } else {
+        img.classList.add('img-lazy-pending');
+        img.addEventListener('load', handleLoad, { once: true });
+        img.addEventListener('error', handleLoad, { once: true });
+    }
+}
 
-    // IntersectionObserver to trigger native lazy loading near viewport
-    if ('IntersectionObserver' in window) {
-        const imgObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    // Force decode before display to prevent "pop-in"
-                    if (img.decode) {
-                        img.decode().catch(() => {}).finally(() => handleLoad(img));
+function initImageFadeIn() {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => setupImageFadeIn(img));
+}
+
+// Observe dynamically added images and scroll-reveal elements (perfect for menu.html AJAX grid)
+function observeDynamicElements() {
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    // Check for lazy images
+                    const imgs = node.tagName === 'IMG' && node.getAttribute('loading') === 'lazy'
+                        ? [node]
+                        : node.querySelectorAll('img[loading="lazy"]');
+                    imgs.forEach(img => setupImageFadeIn(img));
+
+                    // Check for scroll reveals
+                    if (revealObserver) {
+                        const reveals = node.classList.contains('scroll-reveal')
+                            ? [node]
+                            : node.querySelectorAll('.scroll-reveal');
+                        reveals.forEach(el => revealObserver.observe(el));
                     }
-                    observer.unobserve(img);
+
+                    // Check for stagger children
+                    if (staggerObserver) {
+                        const staggers = node.classList.contains('stagger-children')
+                            ? [node]
+                            : node.querySelectorAll('.stagger-children');
+                        staggers.forEach(el => staggerObserver.observe(el));
+                    }
                 }
             });
-        }, { rootMargin: '200px 0px' }); // Pre-load 200px before viewport
+        });
+    });
 
-        lazyImages.forEach(img => imgObserver.observe(img));
-    }
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 }
 
 // ─────────────────────────────────────────────
 // 5. Navbar Auto-Hide on Scroll Down / Show on Scroll Up
 // ─────────────────────────────────────────────
 function initNavHide() {
+    if (window.innerWidth < 768) return; // Disable on mobile to prevent scroll jank, repaint storms, and layout gaps
     const nav = document.querySelector('nav.sticky');
     if (!nav) return;
 
@@ -329,6 +354,7 @@ if (document.readyState === 'loading') {
 function init() {
     initScrollReveal();
     initImageFadeIn();
+    observeDynamicElements(); // Start MutationObserver for dynamically loaded images and scroll reveal items
     initNavHide();
     initAnchorScroll();
     initScrollbarWidthCompensation();

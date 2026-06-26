@@ -295,28 +295,30 @@
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <h1 class="font-heading text-2xl font-bold text-gray-900">Full Menu</h1>
-                <div class="flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar pb-2 md:pb-0">
-                    <button
-                        class="filter-btn active bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all shadow-md shadow-orange-100 hover:shadow-orange-200"
-                        data-filter="all">All 🍽️</button>
-                    <button
-                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
-                        data-filter="Pizza">Pizza 🍕</button>
-                    <button
-                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
-                        data-filter="Burger">Burger 🍔</button>
-                    <button
-                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
-                        data-filter="Biryani">Biryani 🍚</button>
-                    <button
-                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
-                        data-filter="Drinks">Drinks 🥤</button>
-                    <button
-                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
-                        data-filter="veg">Pure Veg 🌿</button>
-                    <button
-                        class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
-                        data-filter="non-veg">Non-Veg 🍗</button>
+                <div class="filter-scroll-wrapper w-full md:w-auto overflow-hidden">
+                    <div class="filter-scroll-container flex gap-2 w-full md:w-auto overflow-x-auto no-scrollbar pb-2 md:pb-0">
+                        <button
+                            class="filter-btn active bg-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all shadow-md shadow-orange-100 hover:shadow-orange-200"
+                            data-filter="all">All 🍽️</button>
+                        <button
+                            class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                            data-filter="Pizza">Pizza 🍕</button>
+                        <button
+                            class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                            data-filter="Burger">Burger 🍔</button>
+                        <button
+                            class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                            data-filter="Biryani">Biryani 🍚</button>
+                        <button
+                            class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                            data-filter="Drinks">Drinks 🥤</button>
+                        <button
+                            class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                            data-filter="veg">Pure Veg 🌿</button>
+                        <button
+                            class="filter-btn bg-white border border-gray-200 text-gray-600 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap hover:bg-gray-50 transition-all"
+                            data-filter="non-veg">Non-Veg 🍗</button>
+                    </div>
                 </div>
             </div>
 
@@ -586,7 +588,7 @@
                 emptyState.classList.add('hidden');
 
                 grid.innerHTML = filtered.map(item => `
-                   <div class="bg-white rounded-2xl p-4 shadow-md border border-gray-100 hover:shadow-lg hover-lift transition-all group h-full flex flex-col cursor-pointer product-card animate-fade-in" data-id="${item.id}">
+                   <div class="bg-white rounded-2xl p-4 shadow-md border border-gray-100 hover:shadow-lg hover-lift transition-all group h-full flex flex-col cursor-pointer product-card scroll-reveal" data-id="${item.id}">
                         <div class="relative rounded-xl overflow-hidden h-48 mb-4 bg-gray-100">
                             <img src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute top-2 left-2 ${item.isVeg ? 'bg-green-600' : 'bg-red-600'} text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider">
@@ -626,6 +628,9 @@
                 currentFilter = btn.dataset.filter;
                 renderMenu();
                  
+                 // Smoothly center the clicked category button in the category scroll container
+                 btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
                  // Smooth scroll to the top of the menu grid with offset for sticky header
                  if (window.tastyLenis) {
                      window.tastyLenis.scrollTo('#menu-grid', { offset: -160, duration: 0.8 });
@@ -684,6 +689,37 @@
 
         // Mobile Menu fix for sticking
         const mobMenu = document.getElementById('mobile-menu');
+
+        // Horizontal Scroll Fade Indicator Logic
+        const scrollWrapper = document.querySelector('.filter-scroll-wrapper');
+        const scrollContainer = document.querySelector('.filter-scroll-container');
+
+        if (scrollWrapper && scrollContainer) {
+            const updateScrollFades = () => {
+                const scrollLeft = scrollContainer.scrollLeft;
+                const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
+                if (scrollLeft > 5) {
+                    scrollWrapper.classList.add('show-left');
+                } else {
+                    scrollWrapper.classList.remove('show-left');
+                }
+
+                if (scrollLeft < maxScroll - 5) {
+                    scrollWrapper.classList.add('show-right');
+                } else {
+                    scrollWrapper.classList.remove('show-right');
+                }
+            };
+
+            scrollContainer.addEventListener('scroll', updateScrollFades, { passive: true });
+            window.addEventListener('resize', updateScrollFades, { passive: true });
+
+            // Run initial check and delayed checks to allow layout rendering
+            updateScrollFades();
+            setTimeout(updateScrollFades, 300);
+            setTimeout(updateScrollFades, 800);
+        }
     </script>
 
     <!-- Performance & UX Enhancement Module -->
