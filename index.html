@@ -64,9 +64,9 @@
     </script>
 
     <!-- Preload LCP hero image for faster Largest Contentful Paint -->
-    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80" fetchpriority="high">
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=avif&fit=crop&w=800&q=80" fetchpriority="high" imagesrcset="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=avif&fit=crop&w=480&q=70 480w, https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=avif&fit=crop&w=800&q=80 800w" imagesizes="(max-width: 768px) 100vw, 50vw">
     <!-- Icons (non-blocking load) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 
     <!-- Fonts -->
@@ -76,41 +76,36 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
 
     <!-- CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f97316', // Orange 500
-                        secondary: '#1f2937', // Gray 800
-                        light: '#f3f4f6', // Gray 100
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        heading: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <link rel="preload" href="./css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./css/style.css"></noscript>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-    </script>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 4s ease-in-out 2s infinite; }
+    </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
-        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5 group">
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-40">
+        <nav class="glass-nav shadow-sm border-b border-gray-150/40">
+            <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" aria-label="TastyTown Home" class="flex items-center gap-2.5 group">
                 <div
                     class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors">
@@ -210,6 +205,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- Premium Mobile Navigation Drawer -->
     <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 pointer-events-none hidden">
@@ -309,13 +305,16 @@
                     <i class="ri-calendar-check-line text-sm"></i> Book a Table
                 </button>
                 <div class="flex justify-center gap-4 text-gray-400">
-                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
-                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
-                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
+                    <a href="#" aria-label="Facebook" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
+                    <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
+                    <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
 
     <!-- Hero Section -->
     <section class="relative bg-white overflow-hidden border-b border-gray-150/40">
@@ -386,12 +385,20 @@
                     
                     <!-- Image Card Container -->
                     <div class="relative overflow-hidden rounded-[2.2rem] shadow-[0_25px_60px_rgba(249,115,22,0.16)] border-4 border-white z-10">
-                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80"
-                            alt="Delicious gourmet food platter with fresh ingredients from TastyTown"
-                            width="800" height="430"
-                            fetchpriority="high"
-                            decoding="async"
-                            class="w-full object-cover h-[430px] transform scale-102 hover:scale-106 transition-transform duration-700">
+                        <picture>
+                            <source srcset="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=avif&fit=crop&w=480&q=70 480w,
+                                            https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=avif&fit=crop&w=800&q=80 800w"
+                                    sizes="(max-width: 768px) 100vw, 50vw" type="image/avif">
+                            <source srcset="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=480&q=70 480w,
+                                            https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80 800w"
+                                    sizes="(max-width: 768px) 100vw, 50vw" type="image/webp">
+                            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=800&q=80"
+                                alt="Delicious gourmet food platter with fresh ingredients from TastyTown"
+                                width="800" height="430"
+                                fetchpriority="high"
+                                decoding="async"
+                                class="w-full object-cover h-[430px] transform scale-102 hover:scale-106 transition-transform duration-700">
+                        </picture>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"></div>
                     </div>
 
@@ -437,7 +444,7 @@
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white">
-                            <h3 class="font-heading font-bold text-xl">Order Online</h3>
+                            <h2 class="font-heading font-bold text-xl">Order Online</h2>
                             <p class="text-xs text-gray-200 mt-1">Stay home and order to your doorstep</p>
                         </div>
                     </div>
@@ -451,7 +458,7 @@
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white">
-                            <h3 class="font-heading font-bold text-xl">Book a Table</h3>
+                            <h2 class="font-heading font-bold text-xl">Book a Table</h2>
                             <p class="text-xs text-gray-200 mt-1">Reserve restaurant dining tables instantly</p>
                         </div>
                     </div>
@@ -465,7 +472,7 @@
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-4 left-4 text-white">
-                            <h3 class="font-heading font-bold text-xl">Drinks & Nightlife</h3>
+                            <h2 class="font-heading font-bold text-xl">Drinks & Nightlife</h2>
                             <p class="text-xs text-gray-200 mt-1">Explore bars & nightlife lounges</p>
                         </div>
                     </div>
@@ -835,6 +842,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 pt-16 pb-8">

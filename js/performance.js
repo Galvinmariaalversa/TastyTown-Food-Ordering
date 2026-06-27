@@ -87,6 +87,8 @@ function initScrollReveal() {
 // ─────────────────────────────────────────────
 // 4. Lazy Image Smooth Fade-In & MutationObserver
 // ─────────────────────────────────────────────
+const pageLoadTime = Date.now();
+
 function setupImageFadeIn(img) {
     if (img.classList.contains('img-loaded') || img.classList.contains('img-lazy-pending')) return;
 
@@ -95,10 +97,11 @@ function setupImageFadeIn(img) {
         img.classList.add('img-loaded');
     };
 
+    img.classList.add('img-lazy-pending');
     if (img.complete && img.naturalWidth > 0) {
+        img.classList.remove('img-lazy-pending');
         img.classList.add('img-loaded');
     } else {
-        img.classList.add('img-lazy-pending');
         img.addEventListener('load', handleLoad, { once: true });
         img.addEventListener('error', handleLoad, { once: true });
     }

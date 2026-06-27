@@ -21,9 +21,10 @@
     <meta name="twitter:title" content="About Us – TastyTown Story & Chefs">
     <meta name="twitter:description" content="Discover the story of Tasty Town. Our journey of sustainable dining, organic ingredients, and our Michelin-starred chef team.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1556910103-1c02745a30bf?fm=webp&fit=crop&w=1200&h=630&q=80">
-    <!-- Icons (non-blocking) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <!-- Icons (non-blocking load) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,28 +32,20 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
+
     <!-- CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f97316',
-                        secondary: '#1f2937',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        heading: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <link rel="preload" href="./css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./css/style.css"></noscript>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-    </script>
+    </style>
     <!-- AboutPage Schema -->
     <script type="application/ld+json">
     {
@@ -99,12 +92,12 @@
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
-        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5 group">
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-40">
+        <nav class="glass-nav shadow-sm border-b border-gray-150/40">
+            <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" aria-label="TastyTown Home" class="flex items-center gap-2.5 group">
                 <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
                     <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,6 +185,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- Premium Mobile Navigation Drawer -->
         <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 pointer-events-none hidden">
@@ -291,13 +285,16 @@
                         <i class="ri-calendar-check-line text-sm"></i> Book a Table
                     </button>
                     <div class="flex justify-center gap-4 text-gray-400">
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
+                        <a href="#" aria-label="Facebook" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
+                        <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
+                        <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
                     </div>
                 </div>
             </div>
         </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
 
     <!-- Header -->
     <header class="bg-gray-900 text-white py-20 text-center relative overflow-hidden">
@@ -499,9 +496,9 @@
                             With over 15 years in luxury dining, Alessandro brings deep expertise in fine-tuning Mediterranean sauces and artisanal doughs.
                         </p>
                         <div class="mt-6 flex items-center gap-4 text-gray-400">
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
+                            <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
+                            <a href="#" aria-label="LinkedIn" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
+                            <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
                         </div>
                     </div>
                 </div>
@@ -521,9 +518,9 @@
                             A pioneer of modern Asian street-fusion culinary arts, Mei is celebrated for combining complex traditional spices with local produce.
                         </p>
                         <div class="mt-6 flex items-center gap-4 text-gray-400">
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
+                            <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
+                            <a href="#" aria-label="LinkedIn" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
+                            <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
                         </div>
                     </div>
                 </div>
@@ -543,9 +540,9 @@
                             Trained in Paris, Sophia manages our desserts and baking arrays, crafting award-winning delights that melt in your mouth.
                         </p>
                         <div class="mt-6 flex items-center gap-4 text-gray-400">
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
-                            <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
+                            <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-line text-lg"></i></a>
+                            <a href="#" aria-label="LinkedIn" class="hover:text-primary transition-colors"><i class="ri-linkedin-line text-lg"></i></a>
+                            <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-line text-lg"></i></a>
                         </div>
                     </div>
                 </div>
@@ -564,6 +561,8 @@
         </div>
 
     </div>
+
+    </main>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 pt-16 pb-8">

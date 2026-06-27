@@ -21,9 +21,10 @@
     <meta name="twitter:title" content="Contact Us – TastyTown Support">
     <meta name="twitter:description" content="Get in touch with TastyTown. Phone, email, locations and customer support.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
-    <!-- Icons (non-blocking) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <!-- Icons (non-blocking load) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,28 +32,20 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
+
     <!-- CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f97316',
-                        secondary: '#1f2937',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        heading: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <link rel="preload" href="./css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./css/style.css"></noscript>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-    </script>
+    </style>
     <!-- ContactPage Schema -->
     <script type="application/ld+json">
     {
@@ -74,11 +67,12 @@
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
-        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5 group">
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-40">
+        <nav class="glass-nav shadow-sm border-b border-gray-150/40">
+            <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" aria-label="TastyTown Home" class="flex items-center gap-2.5 group">
                 <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
                     <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -166,6 +160,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- Premium Mobile Navigation Drawer -->
         <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 pointer-events-none hidden">
@@ -265,13 +260,16 @@
                         <i class="ri-calendar-check-line text-sm"></i> Book a Table
                     </button>
                     <div class="flex justify-center gap-4 text-gray-400">
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
+                        <a href="#" aria-label="Facebook" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
+                        <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
+                        <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
                     </div>
                 </div>
             </div>
         </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
 
     <!-- Header -->
     <header class="bg-gray-900 text-white py-20 text-center relative overflow-hidden">
@@ -295,9 +293,9 @@
                     <i class="ri-phone-line"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-gray-900 text-base mb-1">Call Us</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">+1 234 567 8900</p>
-                    <p class="text-xs text-gray-400 mt-1">Mon - Sun: 9 AM - 11 PM</p>
+                    <h2 class="font-bold text-gray-900 text-base mb-1">Call Us</h2>
+                    <p class="text-sm text-gray-500 leading-relaxed">+1 (234) 567-890</p>
+                    <p class="text-xs text-gray-400 mt-1">Mon - Sun: 9:00 AM - 10:00 PM</p>
                 </div>
             </div>
             <!-- Card 2 -->
@@ -306,7 +304,7 @@
                     <i class="ri-mail-open-line"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-gray-900 text-base mb-1">Email Support</h3>
+                    <h2 class="font-bold text-gray-900 text-base mb-1">Email Support</h2>
                     <p class="text-sm text-gray-500 leading-relaxed">support@tastytown.com</p>
                     <p class="text-xs text-gray-400 mt-1">partners@tastytown.com</p>
                 </div>
@@ -317,7 +315,7 @@
                     <i class="ri-map-pin-line"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-gray-900 text-base mb-1">Main Headquarter</h3>
+                    <h2 class="font-bold text-gray-900 text-base mb-1">Main Headquarter</h2>
                     <p class="text-sm text-gray-500 leading-relaxed">123 Food Street, Tasty Town</p>
                     <p class="text-xs text-gray-400 mt-1">New York, NY 10001, USA</p>
                 </div>
@@ -334,19 +332,19 @@
                 <form id="contact-page-form" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="relative">
-                            <input type="text" placeholder="Your Name"
+                            <input type="text" placeholder="Your Name" aria-label="Your Name"
                                 class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm text-gray-800 placeholder-gray-400"
                                 required>
                         </div>
                         <div class="relative">
-                            <input type="email" placeholder="Your Email"
+                            <input type="email" placeholder="Your Email" aria-label="Your Email"
                                 class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm text-gray-800 placeholder-gray-400"
                                 required>
                         </div>
                     </div>
                     
                     <div class="relative">
-                        <select
+                        <select aria-label="Inquiry Purpose"
                             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm text-gray-500 appearance-none cursor-pointer"
                             required>
                             <option value="" disabled selected>Inquiry Purpose</option>
@@ -361,13 +359,13 @@
                     </div>
 
                     <div class="relative">
-                        <input type="text" placeholder="Subject"
+                        <input type="text" placeholder="Subject" aria-label="Subject"
                             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm text-gray-800 placeholder-gray-400"
                             required>
                     </div>
                     
                     <div class="relative">
-                        <textarea placeholder="Write your message here..."
+                        <textarea placeholder="Write your message here..." aria-label="Message"
                             class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all h-36 text-sm text-gray-800 placeholder-gray-400 resize-none"
                             required></textarea>
                     </div>
@@ -382,7 +380,7 @@
             <!-- Map & Custom Frame -->
             <div class="flex flex-col gap-8 scroll-reveal">
                 <div class="bg-white p-3 rounded-3xl shadow-sm border border-gray-100 overflow-hidden h-[340px] md:h-full min-h-[300px]">
-                    <iframe
+                    <iframe title="TastyTown NY Location Map"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387190.2798821481!2d-74.25986790365737!3d40.69767006828552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1646811265882!5m2!1sen!2sus"
                         width="100%" height="100%" class="rounded-2xl" style="border:0; filter: grayscale(0.2) contrast(1.1) brightness(0.95);" allowfullscreen="" loading="lazy"></iframe>
                 </div>
@@ -452,6 +450,8 @@
         </div>
 
     </div>
+
+    </main>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 pt-16 pb-8">

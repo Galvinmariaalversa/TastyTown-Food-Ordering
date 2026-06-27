@@ -22,8 +22,10 @@
     <meta name="twitter:description" content="Customize your favourite gourmet dish at TastyTown. Fresh ingredients, reviews, and fast local delivery.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
     <!-- Product Schema is dynamically injected via JavaScript below -->
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Icons (non-blocking load) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,39 +33,31 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
+
     <!-- CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f97316',
-                        secondary: '#1f2937',
-                        light: '#f3f4f6',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        heading: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <link rel="preload" href="./css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./css/style.css"></noscript>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-    </script>
+    </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased pb-20 md:pb-0">
 
     <!-- Navbar -->
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
-        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5 group">
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-40">
+        <nav class="glass-nav shadow-sm border-b border-gray-150/40">
+            <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" aria-label="TastyTown Home" class="flex items-center gap-2.5 group">
                 <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
                     <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -151,6 +145,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- Premium Mobile Navigation Drawer -->
         <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 pointer-events-none hidden">
@@ -250,13 +245,16 @@
                         <i class="ri-calendar-check-line text-sm"></i> Book a Table
                     </button>
                     <div class="flex justify-center gap-4 text-gray-400">
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
-                        <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
+                        <a href="#" aria-label="Facebook" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
+                        <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
+                        <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
                     </div>
                 </div>
             </div>
         </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
 
     <!-- Product Details -->
     <section class="py-8 md:py-12">
@@ -331,11 +329,11 @@
                     <div class="flex items-center gap-4 mb-8">
                         <!-- Quantity -->
                         <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 gap-4">
-                            <button id="decrease-qty"
+                            <button id="decrease-qty" aria-label="Decrease quantity"
                                 class="w-8 h-8 rounded-full bg-white text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"><i
                                     class="ri-subtract-line"></i></button>
                             <span id="qty-display" class="font-bold w-4 text-center">1</span>
-                            <button id="increase-qty"
+                            <button id="increase-qty" aria-label="Increase quantity"
                                 class="w-8 h-8 rounded-full bg-white text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"><i
                                     class="ri-add-line"></i></button>
                         </div>
@@ -467,6 +465,8 @@
         <button id="mobile-add-btn" class="bg-primary text-white px-8 py-3 rounded-lg font-bold shadow-lg">Add to
             Cart</button>
     </div>
+
+    </main>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
@@ -675,6 +675,7 @@
         const similarGrid = document.getElementById('similar-grid');
         const similarItems = foodItems.filter(p => p.category === product.category && p.id !== product.id).slice(0, 5);
 
+        // Render Similar Items immediately
         if (similarItems.length === 0) {
             // fallback if no similar items in same cat, show random
             const randomItems = foodItems.filter(p => p.id !== product.id).slice(0, 5);

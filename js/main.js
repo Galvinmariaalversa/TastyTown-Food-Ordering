@@ -200,7 +200,7 @@ export const injectCartDrawer = () => {
                             <p class="text-xs text-gray-400" id="drawer-count-sub">0 items selected</p>
                         </div>
                     </div>
-                    <button id="close-drawer-btn" class="w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors">
+                    <button id="close-drawer-btn" aria-label="Close basket drawer" class="w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors">
                         <i class="ri-close-line text-2xl"></i>
                     </button>
                 </div>
@@ -489,7 +489,7 @@ export const initLocationPicker = () => {
                 <div class="modal-container p-6">
                     <div class="flex items-center justify-between border-b border-gray-150 pb-4 mb-4">
                         <h3 class="font-heading font-bold text-lg text-gray-900">Select Location</h3>
-                        <button id="close-location-btn" class="w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors">
+                        <button id="close-location-btn" aria-label="Close location selector" class="w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors">
                             <i class="ri-close-line text-2xl"></i>
                         </button>
                     </div>
@@ -510,7 +510,7 @@ export const initLocationPicker = () => {
                     </div>
                     
                     <div class="flex gap-2">
-                        <input type="text" id="custom-location-input" placeholder="Type neighborhood or address..." class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+                        <input type="text" id="custom-location-input" aria-label="Custom location" placeholder="Type neighborhood or address..." class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-primary/20 text-sm">
                         <button id="save-custom-loc-btn" class="bg-primary hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-md shadow-orange-100">Save</button>
                     </div>
                 </div>
@@ -608,23 +608,23 @@ export const initTableBooking = () => {
                             </div>
                             <h3 class="font-heading font-bold text-lg text-gray-900">Book Dining Table</h3>
                         </div>
-                        <button id="close-booking-btn" class="w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors">
+                        <button id="close-booking-btn" aria-label="Close table booking dialog" class="w-8 h-8 rounded-full hover:bg-gray-50 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors">
                             <i class="ri-close-line text-2xl"></i>
                         </button>
                     </div>
                     <form id="table-booking-form" class="space-y-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">Full Name</label>
-                            <input type="text" required placeholder="John Doe" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
+                            <label class="block text-xs font-bold text-gray-700 mb-1" for="booking-name">Full Name</label>
+                            <input type="text" id="booking-name" required placeholder="John Doe" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Date</label>
-                                <input type="date" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
+                                <label class="block text-xs font-bold text-gray-700 mb-1" for="booking-date">Date</label>
+                                <input type="date" id="booking-date" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Time Slot</label>
-                                <select required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
+                                <label class="block text-xs font-bold text-gray-700 mb-1" for="booking-time">Time Slot</label>
+                                <select id="booking-time" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
                                     <option value="12:00 PM">12:00 PM (Lunch)</option>
                                     <option value="1:30 PM">1:30 PM</option>
                                     <option value="7:00 PM" selected>7:00 PM (Dinner)</option>
@@ -635,8 +635,8 @@ export const initTableBooking = () => {
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Guests</label>
-                                <select required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
+                                <label class="block text-xs font-bold text-gray-700 mb-1" for="booking-guests">Guests</label>
+                                <select id="booking-guests" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
                                     <option value="2">2 People</option>
                                     <option value="3">3 People</option>
                                     <option value="4" selected>4 People</option>
@@ -645,8 +645,8 @@ export const initTableBooking = () => {
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Occasion</label>
-                                <select class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
+                                <label class="block text-xs font-bold text-gray-700 mb-1" for="booking-occasion">Occasion</label>
+                                <select id="booking-occasion" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20">
                                     <option value="none">None</option>
                                     <option value="birthday">Birthday</option>
                                     <option value="anniversary">Anniversary</option>
@@ -859,7 +859,7 @@ const injectChefAI = () => {
     const chatbotHTML = `
         <div id="chef-ai-container">
             <!-- Premium FAB Bubble -->
-            <div id="chef-ai-fab" class="chef-ai-fab">
+            <div id="chef-ai-fab" class="chef-ai-fab" role="button" tabindex="0" aria-label="Open Chef AI chatbot">
                 <span class="fab-badge"></span>
                 <span class="fab-icon">
                     <i class="ri-chat-smile-3-line"></i>
@@ -908,7 +908,7 @@ const injectChefAI = () => {
                 <!-- Premium Input Area -->
                 <div class="chef-input-area">
                     <div class="chef-input-wrapper">
-                        <input type="text" id="chef-ai-input" placeholder="Ask for suggestions or ingredients..." autocomplete="off">
+                        <input type="text" id="chef-ai-input" aria-label="Message input" placeholder="Ask for suggestions or ingredients..." autocomplete="off">
                     </div>
                     <button id="chef-ai-send" class="chef-send-btn" aria-label="Send message">
                         <i class="ri-send-plane-fill"></i>
@@ -951,6 +951,13 @@ const injectChefAI = () => {
             closeChat();
         } else {
             openChat();
+        }
+    });
+
+    fab.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            fab.click();
         }
     });
     

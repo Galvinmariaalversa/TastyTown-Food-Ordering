@@ -1,0 +1,15 @@
+{
+  "name": "tastytown",
+  "version": "1.0.0",
+  "description": "TastyTown Online Food Ordering",
+  "main": "js/main.js",
+  "scripts": {
+    "build": "tailwindcss -i ./css/input.css -o ./css/tailwind.min.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

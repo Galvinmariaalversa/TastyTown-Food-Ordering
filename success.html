@@ -14,8 +14,10 @@
     <meta property="og:title" content="Order Confirmed – TastyTown">
     <meta property="og:description" content="Order placed successfully! Track your meal delivery in real-time on Tasty Town.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=webp&fit=crop&w=1200&h=630&q=80">
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Icons (non-blocking load) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,28 +25,20 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
+
     <!-- CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f97316',
-                        secondary: '#1f2937',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        heading: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <link rel="preload" href="./css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./css/style.css"></noscript>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-    </script>
+    </style>
     <meta name="robots" content="noindex, nofollow">
     <!-- WebPage Schema -->
     <script type="application/ld+json">
@@ -60,7 +54,8 @@
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased h-screen flex items-center justify-center">
 
-    <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl text-center max-w-md w-full mx-4">
+    <main id="main-content" class="max-w-md w-full mx-4">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl text-center">
 
         <!-- Custom Animated Checkmark -->
         <div class="flex justify-center mb-6">
@@ -93,14 +88,15 @@
         </div>
 
         <div class="mt-8 flex justify-center gap-4">
-            <button class="text-gray-400 hover:text-green-500 transition-colors"><i
+            <button aria-label="Share on WhatsApp" class="text-gray-400 hover:text-green-500 transition-colors"><i
                     class="ri-whatsapp-line text-2xl"></i></button>
-            <button class="text-gray-400 hover:text-blue-500 transition-colors"><i
+            <button aria-label="Share on Twitter / X" class="text-gray-400 hover:text-blue-500 transition-colors"><i
                     class="ri-twitter-x-line text-2xl"></i></button>
-            <button class="text-gray-400 hover:text-red-500 transition-colors"><i
+            <button aria-label="Download Receipt" class="text-gray-400 hover:text-red-500 transition-colors"><i
                     class="ri-download-2-line text-2xl"></i></button>
         </div>
-    </div>
+        </div>
+    </main>
 
     <script type="module">
         const urlParams = new URLSearchParams(window.location.search);

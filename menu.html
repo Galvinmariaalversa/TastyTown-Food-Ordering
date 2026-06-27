@@ -53,9 +53,10 @@
       ]
     }
     </script>
-    <!-- Icons (non-blocking) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <!-- Icons (non-blocking load) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,39 +64,30 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
+
     <!-- CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f97316',
-                        secondary: '#1f2937',
-                        light: '#f3f4f6',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                        heading: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
+    <link rel="stylesheet" href="./css/tailwind.min.css">
+    <link rel="preload" href="./css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="./css/style.css"></noscript>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-    </script>
+    </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans antialiased pb-20 md:pb-0">
 
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-40 glass-nav shadow-sm border-b border-gray-150/40">
-        <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5 group">
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-40">
+        <nav class="glass-nav shadow-sm border-b border-gray-150/40">
+            <div class="container mx-auto px-4 md:px-6 py-3.5 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" aria-label="TastyTown Home" class="flex items-center gap-2.5 group">
                 <div class="relative w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     <div class="absolute inset-0 bg-primary/10 rounded-xl group-hover:bg-primary/15 transition-colors"></div>
                     <svg class="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,6 +175,7 @@
             </div>
         </div>
     </nav>
+    </header>
 
     <!-- Premium Mobile Navigation Drawer -->
     <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 pointer-events-none hidden">
@@ -282,13 +275,16 @@
                     <i class="ri-calendar-check-line text-sm"></i> Book a Table
                 </button>
                 <div class="flex justify-center gap-4 text-gray-400">
-                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
-                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
-                    <a href="#" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
+                    <a href="#" aria-label="Facebook" class="hover:text-primary transition-colors"><i class="ri-facebook-fill text-lg"></i></a>
+                    <a href="#" aria-label="Twitter" class="hover:text-primary transition-colors"><i class="ri-twitter-fill text-lg"></i></a>
+                    <a href="#" aria-label="Instagram" class="hover:text-primary transition-colors"><i class="ri-instagram-fill text-lg"></i></a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
 
     <!-- Menu Header & Filters -->
     <section class="bg-white pt-8 pb-4 border-b border-gray-100 sticky top-16 z-30">
@@ -439,6 +435,8 @@
         </div>
     </div>
 
+    </main>
+
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
         <div class="container mx-auto px-4 md:px-6">
@@ -533,6 +531,7 @@
 
         let currentFilter = 'all';
         let searchQuery = '';
+        let initialRenderTimeout = null;
 
         // Check URL params for category
         const urlParams = new URLSearchParams(window.location.search);
@@ -604,7 +603,7 @@
                             
                             <div class="mt-auto flex items-center justify-between">
                                 <span class="font-heading font-bold text-xl text-primary">${formatCurrency(item.price)}</span>
-                                <button class="add-btn w-10 h-10 bg-gray-100 text-gray-700 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-all shadow-sm" data-id="${item.id}">
+                                <button aria-label="Add to cart" class="add-btn w-10 h-10 bg-gray-100 text-gray-700 hover:bg-primary hover:text-white rounded-xl flex items-center justify-center transition-all shadow-sm" data-id="${item.id}">
                                     <i class="ri-add-line text-xl"></i>
                                 </button>
                             </div>
@@ -617,6 +616,10 @@
         // Event Listeners
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
+                if (initialRenderTimeout) {
+                    clearTimeout(initialRenderTimeout);
+                    initialRenderTimeout = null;
+                }
                 // UI Toggle
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-primary', 'text-white', 'shadow-md', 'shadow-orange-100');
@@ -639,6 +642,10 @@
         });
 
         const handleSearch = (e) => {
+            if (initialRenderTimeout) {
+                clearTimeout(initialRenderTimeout);
+                initialRenderTimeout = null;
+            }
             searchQuery = e.target.value;
             renderMenu();
         };
@@ -682,7 +689,7 @@
         // Listen for global cart updates
         window.addEventListener('cartUpdated', updateMiniCart);
 
-        // Init
+        // Init immediately
         renderMenu();
         updateMiniCart();
         setupMobileMenu();

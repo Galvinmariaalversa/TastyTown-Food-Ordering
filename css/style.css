@@ -2218,4 +2218,14 @@ nav.sticky,
     -webkit-backface-visibility: hidden;
 }
 
+/* Accessibility Focus Indicators */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #f97316 !important;
+    outline-offset: 2px !important;
+}
+
 
